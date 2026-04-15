@@ -20,4 +20,8 @@
     <a href="/mypage">マイページ</a>
 </div>
 
+<div class="sell__link">
+    <a href="/sell">出品</a>
+</div>
+
 商品一覧

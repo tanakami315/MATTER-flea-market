@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+// use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/', [AuthController::class, 'index']);
+Route::get('/', [ItemController::class, 'index']);
+Route::get('/sell', [ItemController::class, 'sell']);
+Route::get('/mypage', [ItemController::class, 'mypage']);
