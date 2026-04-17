@@ -20,5 +20,17 @@ Route::get('/', function () {
 });
 
 Route::get('/', [ItemController::class, 'index']);
+Route::post('/sell', [ItemController::class, 'store']);
 Route::get('/sell', [ItemController::class, 'sell']);
 Route::get('/mypage', [ItemController::class, 'mypage']);
+Route::get('/mypage/profile', [ItemController::class, 'profile']);
+Route::post('/',[ItemController::class,'updateProfile']);
+
+Route::middleware('auth')->get('/redirect-after-login', function () {
+
+    if (!auth()->user()->profile_completed) {
+        return redirect('mypage/profile');
+    }
+
+    return redirect('/');
+});

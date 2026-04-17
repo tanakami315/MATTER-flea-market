@@ -2,7 +2,7 @@
  Flea Market
 
 ## 概要
-
+ユーザーが会員登録することで商品の出品、購入ができるフリマアプリです。
 
 ## 環境構築
 ・Dockerビルド
@@ -13,15 +13,20 @@
 - docker-compose exec php bash
 - composer install
 - cp .env.example .env,
-- .env ファイルの環境変数を適宜変更
+- .env ファイルの環境変数を変更
+    DB_CONNECTION=mysql
+    DB_HOST=mysql
+    DB_PORT=3306
+    DB_DATABASE=laravel_db
+    DB_USERNAME=laravel_user
+    DB_PASSWORD=laravel_pass
 - php artisan key:generate
 - php artisan migrate
 - php artisan db:seed
+- php artisan storage:link
 
 ## URL
-- お問い合わせ画面：http://localhost/
-- ユーザー登録：http://localhost/register
-- ユーザーログイン：http://localhost/login
+- 開発環境：http://localhost/
 - phpMyAdmin：http://localhost:8080/index.php
 
 ## 実行環境

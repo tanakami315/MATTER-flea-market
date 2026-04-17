@@ -12,5 +12,5 @@
 マイページ
 
 <div class="profile__link">
-    <a href="/mypage/profile">マイページ</a>
+    <a href="/mypage/profile">プロフィールを編集</a>
 </div>

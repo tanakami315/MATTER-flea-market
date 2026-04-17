@@ -25,9 +25,14 @@
                     @if (Auth::check())
                         <form action="/logout" method="post" class="header__logout-form">
                             @csrf
-                            <button class="header__logout-button">logout</button>
+                            <button class="header__logout-button">ログアウト</button>
                         </form>
+                    @else
+                        <a href="/login" class="header__login-link">ログイン</a>
                     @endif
+                        <a href="/mypage" class="header__mypage-link">マイページ</a>
+                        <a href="/sell" class="header__sell-link">出品</a>
+                    
                 @yield('button')
             </div>
         </header>
