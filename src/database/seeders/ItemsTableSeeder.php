@@ -17,6 +17,7 @@ class ItemsTableSeeder extends Seeder
     $param = [
     [
         'category_id' => 1,
+        'user_id' => 1,
         'name' => '腕時計',
         'condition' => 1,
         'brand' => 'Rolax',
@@ -27,6 +28,7 @@ class ItemsTableSeeder extends Seeder
     ],
     [
         'category_id' => 2,
+        'user_id' => 1,
         'name' => 'HDD',
         'condition' => 2,
         'brand' => '西芝',
@@ -37,6 +39,7 @@ class ItemsTableSeeder extends Seeder
     ],
     [
         'category_id' => 10,
+        'user_id' => 1,
         'name' => '玉ねぎ3束',
         'condition' => 3,
         'brand' => 'なし',
@@ -47,6 +50,7 @@ class ItemsTableSeeder extends Seeder
     ],
     [
         'category_id' => 1,
+        'user_id' => 2,
         'name' => '革靴',
         'condition' => 4,
         'brand' => '',
@@ -57,6 +61,7 @@ class ItemsTableSeeder extends Seeder
     ],
     [
         'category_id' => 2,
+        'user_id' => 2,
         'name' => 'ノートPC',
         'condition' => 1,
         'brand' => '',
@@ -67,6 +72,7 @@ class ItemsTableSeeder extends Seeder
     ],
     [
         'category_id' => 2,
+        'user_id' => 4,
         'name' => 'マイク',
         'condition' => 2,
         'brand' => 'なし',
@@ -77,6 +83,7 @@ class ItemsTableSeeder extends Seeder
     ],
     [
         'category_id' => 5,
+        'user_id' => 4,
         'name' => 'ショルダーバッグ',
         'condition' => 3,
         'brand' => '',
@@ -87,6 +94,7 @@ class ItemsTableSeeder extends Seeder
     ],
     [
         'category_id' => 10,
+        'user_id' => 6,
         'name' => 'タンブラー',
         'condition' => 4,
         'brand' => 'なし',
@@ -97,6 +105,7 @@ class ItemsTableSeeder extends Seeder
     ],
     [
         'category_id' => 10,
+        'user_id' => 6,
         'name' => 'コーヒーミル',
         'condition' => 1,
         'brand' => 'Starbacks',
@@ -107,6 +116,7 @@ class ItemsTableSeeder extends Seeder
     ],
     [
         'category_id' => 4,
+        'user_id' => 6,
         'name' => 'メイクセット',
         'condition' => 2,
         'brand' => '',
@@ -114,6 +124,17 @@ class ItemsTableSeeder extends Seeder
         'price' => 2500,
         'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/%E5%A4%96%E5%87%BA%E3%83%A1%E3%82%A4%E3%82%AF%E3%82%A2%E3%83%83%E3%83%95%E3%82%9A%E3%82%BB%E3%83%83%E3%83%88.jpg',
         'sold' => 0,
+    ],
+    [
+        'category_id' => 2,
+        'user_id' => 8,
+        'name' => 'ノートPC',
+        'condition' => 1,
+        'brand' => '',
+        'description' => '高性能なノートパソコン',
+        'price' => 45000,
+        'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Living+Room+Laptop.jpg',
+        'sold' => 1,
     ],
     ];
     DB::table('items')->insert($param);

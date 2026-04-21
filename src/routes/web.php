@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,18 +20,31 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('/mypage', [UserController::class, 'showMypage']);
+Route::get('/mypage/profile', [UserController::class, 'showProfile']);
+Route::post('/',[UserController::class,'updateProfile']);
+
 Route::get('/', [ItemController::class, 'index']);
-Route::post('/sell', [ItemController::class, 'store']);
 Route::get('/sell', [ItemController::class, 'sell']);
-Route::get('/mypage', [ItemController::class, 'mypage']);
-Route::get('/mypage/profile', [ItemController::class, 'profile']);
-Route::post('/',[ItemController::class,'updateProfile']);
+Route::post('/sell', [ItemController::class, 'store']);
+Route::get('/item/{item_id}', [ItemController::class, 'showDetail']);
+Route::get('/purchase/{item_id}', [ItemController::class, 'choose']);
+Route::post('/purchase/{item_id}', [ItemController::class, 'choose']);
+Route::get('/purchase/address/{item_id}', [ItemController::class, 'editAddress']);
+Route::post('/purchase/address/{item_id}', [ItemController::class, 'updateAddress']);
+Route::get('/purchase/finish/{item_id}', [ItemController::class, 'purchase']);
+Route::post('/purchase/finish/{item_id}', [ItemController::class, 'purchase']);
+
+Route::post('/item/{item_id}/like', [ItemController::class, 'like']);
+Route::delete('/item/{item_id}/like', [ItemController::class, 'unlike']);
+
+Route::get('/item/{item_id}', [CommentController::class, 'showComments']);
+Route::post('/item/{item_id}/comment', [CommentController::class, 'store']);
 
 Route::middleware('auth')->get('/redirect-after-login', function () {
-
     if (!auth()->user()->profile_completed) {
         return redirect('mypage/profile');
     }
-
     return redirect('/');
 });
