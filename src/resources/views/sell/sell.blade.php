@@ -25,7 +25,7 @@
                             </option>
                         @endforeach
                     </select>
-                    <select class="contact-form__choice">
+                    <select class="contact-form__choice" name="condition">
                             <option value="1" {{ old('condition') == '1' ? 'selected' : '' }}>
                                 良好
                             </option>
@@ -55,6 +55,7 @@
                     <label for="price">販売価格</label>
                     <input type="number" class="form-control" id="price" name="price" required>
                 </div>
+        <input type="hidden" name="user_id" value="{{ Auth::id() }}">
         <button type="submit" class="btn btn-primary">出品</button>
     </form>
 </div>

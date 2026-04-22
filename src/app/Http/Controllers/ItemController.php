@@ -10,23 +10,69 @@ use App\Models\Like;
 
 class ItemController extends Controller
 {
-    #一覧表示
+    #商品表示
     public function index(Request $request)
     {
         $tab = $request->query('tab');
 
+        #マイリスト(いいね)表示
         if ($tab === 'mylist') {
             $items = Item::join('likes', 'items.id', '=', 'likes.item_id')
                 ->where('likes.user_id', auth()->id())
                 ->orderBy('likes.id', 'desc')
                 ->select('items.*')
                 ->get();
-        } else {
+        }
+        #検索結果
+        else if ($tab === 'result') {
+            $items = Item::with('category')
+                ->KeywordSearch($request->query('keyword'))
+                ->orderBy('id', 'desc')
+                ->get();
+        }
+        #おすすめ
+        else {
             $items = Item::orderBy('id', 'desc')->get();
         }
         return view('index', compact('items'));
     }
     
+    #マイページ表示
+    public function showMypage(Request $request)
+    {
+        $tab = $request->query('tab');
+        $user = auth()->user();
+
+        #購入した商品
+        if ($tab === 'buy') {
+            $items = Item::join('buys', 'items.id', '=', 'buys.item_id')
+                ->where('buys.user_id', auth()->id())
+                ->orderBy('buys.id', 'desc')
+                ->select('items.*')
+                ->get();
+        }
+        #出品した商品
+        else {
+            $items = Item::with('category')
+                ->where('user_id', auth()->id())
+                ->orderBy('id', 'desc')
+                ->get();
+        }
+
+        return view('mypage.mypage', compact('items'));
+    }
+
+    #検索
+    public function search(Request $request)
+    {
+        $items = Item::with('category')
+            ->KeywordSearch($request->keyword)
+            ->orderBy('id', 'desc')
+            ->get();
+
+        return view('index', compact('items'));
+    }
+
     #出品
     public function sell()
     {
@@ -37,6 +83,7 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $item = $request->only([ 
+            'user_id',
             'category_id',
             'name',
             'condition',
@@ -47,9 +94,10 @@ class ItemController extends Controller
             'sold',
         ]);
 
+
         if ($request->hasFile('image')) {
-        $path = $request->file('image')->store('item-images', 'public');
-        $item['image'] = $path;
+            $path = $request->file('image')->store('item-images', 'public');
+            $item['image'] = $path;
         }
 
         Item::create($item);
@@ -89,7 +137,7 @@ class ItemController extends Controller
             'building_name' => $user->building_name,
         ]);
 
-        return view('purchase.edit-address', compact('item','user', 'purchaseAddress'));
+        return view('purchase.address', compact('item','user', 'purchaseAddress'));
     }
 
     public function updateAddress(Request $request, $item_id)
@@ -147,5 +195,7 @@ class ItemController extends Controller
         Like::where('item_id', $item_id)->where('user_id', auth()->id())->delete();
         return redirect("/item/{$item_id}");
     }
+
+    
 }
 

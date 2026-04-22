@@ -8,11 +8,6 @@ use App\Models\Category;
 
 class UserController extends Controller
 {
-    public function showMypage()
-    {
-        return view('mypage.mypage');
-    }
-
     public function showProfile()
     {
         return view('mypage.profile');
@@ -21,10 +16,19 @@ class UserController extends Controller
     public function updateProfile(Request $request)
     {
         $user = auth()->user();
-        $user->update($request->only(['name','postal_code', 'address', 'building_name', 'icon']));
-        $user->profile_completed = true;
+
+        $user->name = $request->name;
+        $user->postal_code = $request->postal_code;
+        $user->address = $request->address;
+        $user->building_name = $request->building_name;
+
+        if ($request->hasFile('icon')) {
+            $path = $request->file('icon')->store('user_icon', 'public');
+            $user['icon'] = $path;
+        }
+
         $user->save();
 
-        return redirect('/');
+        return redirect('/mypage');
     }
 }

@@ -21,11 +21,11 @@ Route::get('/', function () {
 });
 
 
-Route::get('/mypage', [UserController::class, 'showMypage']);
 Route::get('/mypage/profile', [UserController::class, 'showProfile']);
-Route::post('/',[UserController::class,'updateProfile']);
+Route::post('/mypage/update',[UserController::class,'updateProfile']);
 
 Route::get('/', [ItemController::class, 'index']);
+Route::get('/mypage', [ItemController::class, 'showMypage']);
 Route::get('/sell', [ItemController::class, 'sell']);
 Route::post('/sell', [ItemController::class, 'store']);
 Route::get('/item/{item_id}', [ItemController::class, 'showDetail']);
@@ -35,9 +35,9 @@ Route::get('/purchase/address/{item_id}', [ItemController::class, 'editAddress']
 Route::post('/purchase/address/{item_id}', [ItemController::class, 'updateAddress']);
 Route::get('/purchase/finish/{item_id}', [ItemController::class, 'purchase']);
 Route::post('/purchase/finish/{item_id}', [ItemController::class, 'purchase']);
-
 Route::post('/item/{item_id}/like', [ItemController::class, 'like']);
 Route::delete('/item/{item_id}/like', [ItemController::class, 'unlike']);
+Route::get('/search', [ItemController::class, 'search']);
 
 Route::get('/item/{item_id}', [CommentController::class, 'showComments']);
 Route::post('/item/{item_id}/comment', [CommentController::class, 'store']);

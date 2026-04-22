@@ -6,11 +6,17 @@
 
 @section('content')
 <div class="container">
-    <h1>プロフィールの入力</h1>
-    <form action="/" method="post" novalidate>
+    <h1>プロフィール設定</h1>
+    <form action="/mypage/update" method="post" enctype="multipart/form-data" novalidate>
         @csrf
         <div class="form-group">
-            <label for="name">名前</label>
+            <input
+                type="file"
+                class="form-control"
+                id="icon"
+                name="icon"
+            />
+            <label for="name">ユーザー名</label>
             <input
                 type="text"
                 class="form-control"
