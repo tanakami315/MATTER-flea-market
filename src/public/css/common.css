@@ -32,6 +32,7 @@
     font-size: 24px;
     border: none;
     border-radius: 3px;
+    box-sizing: border-box;
 }
 
 .search-form__content::placeholder {
@@ -46,6 +47,7 @@
     font-size: 24px;
     border: none;
     border-radius: 3px;
+    box-sizing: border-box;
     cursor: pointer;
 }
 
@@ -79,5 +81,6 @@
     font-size: 24px;
     border: none;
     border-radius: 3px;
+    box-sizing: border-box;
     text-decoration: none;
 }
