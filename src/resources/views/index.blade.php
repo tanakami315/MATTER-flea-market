@@ -1,34 +1,48 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/label.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/list.css') }}">
 @endsection
 
 @section('content')
-<div class="page_link">
-    <a href="{{ url('/?keyword=' . request('keyword')) }}">おすすめ</a>
-</div>
-<div class="page_link">
-    <a href="{{ url('/?tab=mylist&keyword=' . request('keyword')) }}">マイリスト</a>
+<div class="label">
+    <div class="label__page">
+        <a
+            href="{{ url('/?keyword=' . request('keyword')) }}"
+            class="label__page--link {{ request('tab')!='mylist'? 'active' : '' }}"
+        >
+            おすすめ
+        </a>
+        <a
+            href="{{ url('/?tab=mylist&keyword=' . request('keyword')) }}"
+            class="label__page--link {{ request('tab')=='mylist'? 'active' : '' }}"
+        >
+            マイリスト
+        </a>
+    </div>
 </div>
 
 <!-- 以下mypage.blade.phpとおなじ -->
-@foreach ($items as $item)
-        <tr class="result__content">
-            <td>
-                <a href="{{ url('/item/' . $item->id) }}">  
+<div class="list">
+    @foreach ($items as $item)
+        <div class="item">
+            <div class="item__image">
+                <a href="{{ url('/item/' . $item->id) }}">
                 @if (Str::startsWith($item->image, ['http://', 'https://']))
-                    <img class="item-image" src="{{ $item->image }}" alt="">
+                    <img class="item__image--view" src="{{ $item->image }}" alt="商品画像">
                 @else
-                    <img class="item-image" src="{{ asset('storage/' . $item->image) }}" alt="">
+                    <img class="item__image--view" src="{{ asset('storage/' . $item->image) }}" alt="商品画像">
                 @endif
                 </a>
-            </td>
-            <td>{{ $item->name }}
                 @if ($item->sold)
-                    <span class="sold-out">SOLD OUT</span>
+                    <span class="item__image--text">SOLD</span>
                 @endif
-            </td>
-        </tr>
-@endforeach
+            </div>
+            <div class="item__name">
+                {{ $item->name }}
+            </div>
+        </div>
+    @endforeach
+</div>
 @endsection

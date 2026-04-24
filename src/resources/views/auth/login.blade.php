@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="user-form__card">
+<div class="user-form">
 	<h1 class="user-form__title">ログイン</h1>
 	
 	<form class="user-form__content" action="/login" method="post" novalidate>
@@ -33,7 +33,7 @@
 		</div>
 
 		<div class="user-form__button">
-			<button class="user-form__button-submit" type="submit">ログインする</button>
+			<button class="user-form__button--submit" type="submit">ログインする</button>
 		</div>
 	</form>
 	<div class="auth__link">

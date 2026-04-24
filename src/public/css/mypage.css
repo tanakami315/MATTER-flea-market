@@ -1,4 +1,33 @@
-.item-image{
-    width: 200px;
-    height: auto;
+.user {
+    max-width: 1200px;
+    margin: 100px auto 0;
+    display: flex;
+    align-items: center;
+}
+
+.user-icon {
+    display: flex;
+    align-items: center;
+}
+
+.user-name {
+    margin-left: 100px;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.profile {
+    margin-right: 100px;
+    margin-left: auto;
+}
+
+.profile-link {
+    padding: 10px 20px;
+    border:2px solid #FF5555;
+    border-radius: 10px;
+    font-size: 26px;
+    font-weight: bold;
+    color: #FF5555;
+    cursor: pointer;
+    text-decoration: none;
 }

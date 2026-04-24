@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="user-form__card">
+<div class="user-form">
 	<h1 class="user-form__title">会員登録</h1>
 
     <form class="user-form__content" action="/register" method="post" novalidate>
@@ -61,7 +61,7 @@
         </div>
     </form>
     <div class="auth__link">
-		<a class="auth__link-submit" href="/login">ログインはこちら</a>
+		<a class="auth__link--submit" href="/login">ログインはこちら</a>
 	</div>
 </div>
 @endsection

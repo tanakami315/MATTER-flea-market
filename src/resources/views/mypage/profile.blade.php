@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="user-form__card">
+    <div class="user-form">
         <h1 class="user-form__title">プロフィール設定</h1>
 
         <form
@@ -15,11 +15,22 @@
             enctype="multipart/form-data"
             novalidate
         >
-
             @csrf
-            <div class="user-form-group">
+            <div class="user-form__group">
+                <div class="user-form__item--icon">
+                    @if(Auth::user()->icon)
+                        <img
+                            class="user-icon__image"
+                            src="{{ asset('storage/' . Auth::user()->icon) }}"
+                            alt=""
+                        />
+                    @else
+                        <div class="user-icon__default"></div>
+                    @endif
+                    <label class="user-icon__label" for="icon" >画像を選択する</label>
+                    <input type="file" class="user-icon__input" id="icon" name="icon" />
+                </div>
                 <div class="user-form__item">
-                    <input type="file" class="form-control" id="icon" name="icon" />
                     <label class="user-form__label">ユーザー名</label>
                     <input class="user-form__input" type="text" name="name"
                         value="{{ old('name', auth()->user()->name) }}" />
@@ -76,7 +87,7 @@
                 </div>
             </div>
             <div class="user-form__button">
-                <button class="user-form__button-submit" type="submit">更新する/button>
+                <button class="user-form__button--submit" type="submit">更新する</button>
             </div>
         </form>
     </div>
