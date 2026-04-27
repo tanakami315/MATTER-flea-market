@@ -26,8 +26,8 @@
 .item__image--text {
     padding: 7px 10px;
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 0px;
+    left: 0px;
     color: #FFF;
     background-color: #FF0000;
     font-size: 24px;

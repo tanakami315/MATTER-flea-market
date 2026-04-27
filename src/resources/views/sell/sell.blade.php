@@ -7,7 +7,6 @@
 @section('content')
     <div class="sell-form">
         <h1 class="sell-form__title">商品の出品</h1>
-    
         <form
             class="sell-form__content"
             action="/sell"
@@ -17,31 +16,34 @@
         >
             @csrf
             <div class="sell-form__group">
-                <div class="sell-form__item"></div>
+                <div class="sell-form__item">
                     <label class="sell-form__label" for="image">商品画像</label>
                     <div class="sell-form__input--image">
                         <label class="image-box">
+                            <input type="file" class="image-box__input" id="image" name="image" required>
                             <span class="image-box__text" for="image" name="image" >
                                 画像を選択する
                             </span>
                         </label>
-                        <input type="file" class="image-box__input" id="image" name="image" required>
                     </div>
+                </div>
                 <h2 class="sell-form__subtitle">商品の詳細</h2>
                 <div class="sell-form__item">
                     <label class="sell-form__label" for="category">カテゴリー</label>
                     <div class="sell-form__input--category" name="category_id">
                         @foreach($categories as $category)
-                            <input
-                                class="category__input"
-                                type="checkbox"
-                                name="category_id"
-                                value="{{ $category->id }}"
-                                {{ old('category_id') == $category->id ? 'checked' : '' }}
-                            />
-                            <span class="category__content">
-                                {{ $category->content }}
-                            </span>
+                            <label class="category__item">
+                                <input
+                                    class="category__input"
+                                    type="checkbox"
+                                    name="category_id"
+                                    value="{{ $category->id }}"
+                                    {{ old('category_id') == $category->id ? 'checked' : '' }}
+                                />
+                                <span class="category__content">
+                                    {{ $category->content }}
+                                </span>
+                            </label>
                         @endforeach
                         <span class="category__empty"></span>
                     </div>
@@ -85,15 +87,23 @@
                 </div>
                 <div class="sell-form__item">
                     <label class="sell-form__label" for="price">販売価格</label>
-                   <div class="sell-form__price">
+                    <div class="sell-form__price">
                         <span class="sell-form__price-mark">￥</span>
-                        <input type="number" class="sell-form__input--common price" id="price" name="price" required>
+                        <input type="text" class="sell-form__input--common price" id="price" name="price" required>
+                    </div>
+                </div>
+                <div class="sell-form__item">
+                    <input
+                        type="hidden"
+                        id="user_id"
+                        name="user_id"
+                        value="{{ Auth::id() }}"
+                    >
                 </div>
             </div>
-
-        <div class="sell-form__button"></div>
-            <button class="sell-form__button--submit" type="submit" class="btn btn-primary">出品する</button>
-        </div>
-    </form>
-</div>
+            <div class="sell-form__button">
+                <button class="sell-form__button--submit" type="submit" class="btn btn-primary">出品する</button>
+            </div>
+        </form>
+    </div>
 @endsection

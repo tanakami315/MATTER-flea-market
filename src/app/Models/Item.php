@@ -27,20 +27,40 @@ class Item extends Model
         return $this->belongsTo(Category::class);
     }
 
+    #いいね
     public function likes()
     {
         return $this->hasMany(Like::class);
     }
 
+
+    #コメント
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    #検索
     public function scopeKeywordSearch($query, $keyword)
     {
-        if (!empty($keyword)) {
-            $query->where(function ($q) use ($keyword) {
-                $q->where('name', 'like', '%' . $keyword . '%')
-                    ->orWhere('brand', 'like', '%' . $keyword . '%')
-                    ->orWhere('description', 'like', '%' . $keyword . '%');
-            });
+        if (auth()->check()) {
+        $query->where('user_id', '!=', auth()->id());
         }
+
+        if (!empty($keyword)) {
+            $query->where('name', 'like', '%' . $keyword . '%');
+        }
+
+        return $query;
+    }
+
+    #自分が出品した商品を除外
+    public function scopeExceptMine($query)
+    {
+        if (auth()->check()) {
+            $query->where('user_id', '!=', auth()->id());
+        }
+
         return $query;
     }
 }

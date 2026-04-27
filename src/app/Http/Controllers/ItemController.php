@@ -25,14 +25,16 @@ class ItemController extends Controller
         }
         #検索結果
         else if ($tab === 'result') {
-            $items = Item::with('category')
+            $items = Item::ExceptMine()
                 ->KeywordSearch($request->query('keyword'))
                 ->orderBy('id', 'desc')
                 ->get();
         }
         #おすすめ
         else {
-            $items = Item::orderBy('id', 'desc')->get();
+            $items = Item::ExceptMine()
+                ->orderBy('id', 'desc')
+                ->get();
         }
         return view('index', compact('items'));
     }
@@ -107,9 +109,12 @@ class ItemController extends Controller
     #購入
     public function showDetail($item_id)
     {
-        $item = Item::findOrFail($item_id);
+        $item = Item::with(['likes', 'category'])
+            ->withCount('likes', 'comments')
+            ->findOrFail($item_id);
+    
         $category = Category::findOrFail($item->category_id);
-        return view('purchase.detail', compact('item','category'));
+        return view('purchase.detail', compact('item', 'category'));
     }
 
     public function choose(Request $request, $item_id)
@@ -195,7 +200,5 @@ class ItemController extends Controller
         Like::where('item_id', $item_id)->where('user_id', auth()->id())->delete();
         return redirect("/item/{$item_id}");
     }
-
-    
 }
 

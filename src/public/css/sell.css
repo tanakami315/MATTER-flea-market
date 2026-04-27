@@ -74,8 +74,12 @@
     margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
-    row-gap: 25px;
+    gap: 25px 10px;
     justify-content: space-between;
+}
+
+.category__item {
+    display: inline-block;
 }
 
 .category__input {
@@ -95,8 +99,13 @@
     cursor: pointer;
 }
 
+.category__input:checked + .category__content {
+    background-color: #FF5555;
+    color: #fff;
+}
+
 .category__empty {
-    width: 410px;
+    width: 58%;
 }
 
 .sell-form__input--common {
