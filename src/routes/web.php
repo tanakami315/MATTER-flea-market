@@ -16,35 +16,33 @@ use App\Http\Controllers\CommentController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
-Route::get('/mypage/profile', [UserController::class, 'showProfile']);
-Route::post('/mypage/update',[UserController::class,'updateProfile']);
-
 Route::get('/', [ItemController::class, 'index']);
-Route::get('/mypage', [ItemController::class, 'showMypage']);
-Route::get('/sell', [ItemController::class, 'sell']);
-Route::post('/sell', [ItemController::class, 'store']);
 Route::get('/item/{item_id}', [ItemController::class, 'showDetail']);
-Route::get('/purchase/{item_id}', [ItemController::class, 'choose']);
-Route::post('/purchase/{item_id}', [ItemController::class, 'choose']);
-Route::get('/purchase/address/{item_id}', [ItemController::class, 'editAddress']);
-Route::post('/purchase/address/{item_id}', [ItemController::class, 'updateAddress']);
-Route::get('/purchase/finish/{item_id}', [ItemController::class, 'purchase']);
-Route::post('/purchase/finish/{item_id}', [ItemController::class, 'purchase']);
-Route::post('/item/{item_id}/like', [ItemController::class, 'like']);
-Route::delete('/item/{item_id}/like', [ItemController::class, 'unlike']);
 Route::get('/search', [ItemController::class, 'search']);
-
 Route::get('/item/{item_id}', [CommentController::class, 'showComments']);
-Route::post('/item/{item_id}/comment', [CommentController::class, 'store']);
 
-Route::middleware('auth')->get('/redirect-after-login', function () {
-    if (!auth()->user()->profile_completed) {
-        return redirect('mypage/profile');
-    }
-    return redirect('/');
+Route::middleware('auth')->group(function () {
+    Route::get('/mypage/profile', [UserController::class, 'showProfile']);
+    Route::post('/mypage/update',[UserController::class,'updateProfile']);
+
+    Route::get('/mypage', [ItemController::class, 'showMypage']);
+    Route::get('/sell', [ItemController::class, 'sell']);
+    Route::post('/sell', [ItemController::class, 'store']);
+    Route::get('/purchase/{item_id}', [ItemController::class, 'choose']);
+    Route::post('/purchase/{item_id}', [ItemController::class, 'choose']);
+    Route::get('/purchase/address/{item_id}', [ItemController::class, 'editAddress']);
+    Route::post('/purchase/address/{item_id}', [ItemController::class, 'updateAddress']);
+    Route::get('/purchase/finish/{item_id}', [ItemController::class, 'purchase']);
+    Route::post('/purchase/finish/{item_id}', [ItemController::class, 'purchase']);
+    Route::post('/item/{item_id}/like', [ItemController::class, 'like']);
+    Route::delete('/item/{item_id}/like', [ItemController::class, 'unlike']);
+
+    Route::post('/item/{item_id}/comment', [CommentController::class, 'store']);
+
+    Route::middleware('auth')->get('/redirect-after-login', function () {
+        if (!auth()->user()->profile_completed) {
+            return redirect('mypage/profile');
+        }
+        return redirect('/');
+    });
 });

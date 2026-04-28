@@ -67,7 +67,7 @@
     text-align: center;
 }
 
-.auth__link-submit {
+.auth__link--submit {
     font-size: 20px;
     color: #0073CC;
     text-decoration: none;

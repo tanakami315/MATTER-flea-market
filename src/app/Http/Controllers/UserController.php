@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Item;
-use App\Models\Category;
+use App\Models\User;
+use App\Http\Requests\ProfileRequest;
 
 class UserController extends Controller
 {
@@ -13,9 +12,9 @@ class UserController extends Controller
         return view('mypage.profile');
     }
 
-    public function updateProfile(Request $request)
+    public function updateProfile(ProfileRequest $request)
     {
-        $user = auth()->user();
+        $user = User::findOrFail(auth()->id());
 
         $user->name = $request->name;
         $user->postal_code = $request->postal_code;

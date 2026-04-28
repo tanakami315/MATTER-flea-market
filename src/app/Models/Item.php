@@ -12,7 +12,6 @@ class Item extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
-        'category_id',
         'name',
         'condition',
         'brand',
@@ -22,9 +21,9 @@ class Item extends Model
         'sold',
     ];
 
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class);
     }
 
     #いいね

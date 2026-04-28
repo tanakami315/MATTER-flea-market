@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Item;
 
 class ItemsTableSeeder extends Seeder
 {
@@ -16,7 +16,6 @@ class ItemsTableSeeder extends Seeder
     {
     $param = [
     [
-        'category_id' => 1,
         'user_id' => 1,
         'name' => '腕時計',
         'condition' => 1,
@@ -25,9 +24,9 @@ class ItemsTableSeeder extends Seeder
         'price' => 15000,
         'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Armani+Mens+Clock.jpg',
         'sold' => 0,
+        'categories' => [1, 5],
     ],
     [
-        'category_id' => 2,
         'user_id' => 1,
         'name' => 'HDD',
         'condition' => 2,
@@ -36,9 +35,9 @@ class ItemsTableSeeder extends Seeder
         'price' => 5000,
         'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/HDD+Hard+Disk.jpg',
         'sold' => 0,
+        'categories' => [2],
     ],
     [
-        'category_id' => 10,
         'user_id' => 1,
         'name' => '玉ねぎ3束',
         'condition' => 3,
@@ -47,9 +46,9 @@ class ItemsTableSeeder extends Seeder
         'price' => 300,
         'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/iLoveIMG+d.jpg',
         'sold' => 0,
+        'categories' => [10],
     ],
     [
-        'category_id' => 1,
         'user_id' => 2,
         'name' => '革靴',
         'condition' => 4,
@@ -58,9 +57,9 @@ class ItemsTableSeeder extends Seeder
         'price' => 4000,
         'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Leather+Shoes+Product+Photo.jpg',
         'sold' => 0,
+        'categories' => [1, 5],
     ],
     [
-        'category_id' => 2,
         'user_id' => 2,
         'name' => 'ノートPC',
         'condition' => 1,
@@ -69,9 +68,9 @@ class ItemsTableSeeder extends Seeder
         'price' => 45000,
         'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Living+Room+Laptop.jpg',
         'sold' => 0,
+        'categories' => [2],
     ],
     [
-        'category_id' => 2,
         'user_id' => 4,
         'name' => 'マイク',
         'condition' => 2,
@@ -80,9 +79,9 @@ class ItemsTableSeeder extends Seeder
         'price' => 8000,
         'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Music+Mic+4632231.jpg',
         'sold' => 0,
+        'categories' => [2],
     ],
     [
-        'category_id' => 5,
         'user_id' => 4,
         'name' => 'ショルダーバッグ',
         'condition' => 3,
@@ -91,9 +90,9 @@ class ItemsTableSeeder extends Seeder
         'price' => 3500,
         'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Purse+fashion+pocket.jpg',
         'sold' => 0,
+        'categories' => [1, 4, 11],
     ],
     [
-        'category_id' => 10,
         'user_id' => 6,
         'name' => 'タンブラー',
         'condition' => 4,
@@ -102,9 +101,9 @@ class ItemsTableSeeder extends Seeder
         'price' => 500,
         'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Tumbler+souvenir.jpg',
         'sold' => 0,
+        'categories' => [10],
     ],
     [
-        'category_id' => 10,
         'user_id' => 6,
         'name' => 'コーヒーミル',
         'condition' => 1,
@@ -113,9 +112,9 @@ class ItemsTableSeeder extends Seeder
         'price' => 4000,
         'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Waitress+with+Coffee+Grinder.jpg',
         'sold' => 0,
+        'categories' => [10],
     ],
     [
-        'category_id' => 4,
         'user_id' => 6,
         'name' => 'メイクセット',
         'condition' => 2,
@@ -124,9 +123,9 @@ class ItemsTableSeeder extends Seeder
         'price' => 2500,
         'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/%E5%A4%96%E5%87%BA%E3%83%A1%E3%82%A4%E3%82%AF%E3%82%A2%E3%83%83%E3%83%95%E3%82%9A%E3%82%BB%E3%83%83%E3%83%88.jpg',
         'sold' => 0,
+        'categories' => [4, 6],
     ],
     [
-        'category_id' => 2,
         'user_id' => 8,
         'name' => 'ノートPC',
         'condition' => 1,
@@ -135,9 +134,19 @@ class ItemsTableSeeder extends Seeder
         'price' => 45000,
         'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Living+Room+Laptop.jpg',
         'sold' => 1,
+        'categories' => [2],
     ],
     ];
-    DB::table('items')->insert($param);
+    
+    foreach ($param as $itemData) {
+        $categoryIds = $itemData['categories'];
+
+        unset($itemData['categories']);
+
+        $item = Item::create($itemData);
+
+        $item->categories()->sync($categoryIds);
+    }
     }
 
 }

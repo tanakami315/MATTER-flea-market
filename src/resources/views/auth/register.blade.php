@@ -57,7 +57,7 @@
         </div>
 
         <div class="user-form__button">
-            <button class="user-form__button-submit" type="submit">登録</button>
+            <button class="user-form__button--submit" type="submit">登録</button>
         </div>
     </form>
     <div class="auth__link">

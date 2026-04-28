@@ -37,7 +37,7 @@
 		</div>
 	</form>
 	<div class="auth__link">
-		<a class="auth__link-submit" href="/register">会員登録はこちら</a>
+		<a class="auth__link--submit" href="/register">会員登録はこちら</a>
 	</div>
 </div>
 @endsection

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\AddressRequest;
+use App\Http\Requests\PurchaseRequest;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\Buy;
@@ -55,7 +57,7 @@ class ItemController extends Controller
         }
         #出品した商品
         else {
-            $items = Item::with('category')
+            $items = Item::with('categories')
                 ->where('user_id', auth()->id())
                 ->orderBy('id', 'desc')
                 ->get();
@@ -67,7 +69,7 @@ class ItemController extends Controller
     #検索
     public function search(Request $request)
     {
-        $items = Item::with('category')
+        $items = Item::with('categories')
             ->KeywordSearch($request->keyword)
             ->orderBy('id', 'desc')
             ->get();
@@ -84,9 +86,8 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
-        $item = $request->only([ 
+        $itemData = $request->only([ 
             'user_id',
-            'category_id',
             'name',
             'condition',
             'brand',
@@ -99,30 +100,32 @@ class ItemController extends Controller
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('item-images', 'public');
-            $item['image'] = $path;
+            $itemData['image'] = $path;
         }
 
-        Item::create($item);
+        $item = Item::create($itemData);
+        $item->categories()->sync($request->category_id);
         return redirect('/');
     }
 
     #購入
     public function showDetail($item_id)
     {
-        $item = Item::with(['likes', 'category'])
+        $item = Item::with(['likes', 'categories', 'comments.user'])
             ->withCount('likes', 'comments')
             ->findOrFail($item_id);
     
         $category = Category::findOrFail($item->category_id);
-        return view('purchase.detail', compact('item', 'category'));
+        
+        return view('purchase.detail', compact('item', 'categories'));
     }
 
     public function choose(Request $request, $item_id)
     {
         $item = Item::findOrFail($item_id);
         $user = auth()->user();
-
-        $purchaseAddress = session('purchase_address', [
+        $sessionKey = 'purchase_address_' . $item_id;
+        $purchaseAddress = session('$sessionKey', [
             'postal_code' => $user->postal_code,
             'address' => $user->address,
             'building_name' => $user->building_name,
@@ -135,8 +138,8 @@ class ItemController extends Controller
     {
         $item = Item::findOrFail($item_id);
         $user = auth()->user();
-
-        $purchaseAddress = session('purchase_address', [
+        $sessionKey = 'purchase_address_' . $item_id;
+        $purchaseAddress = session('$sessionKey', [
             'postal_code' => $user->postal_code,
             'address' => $user->address,
             'building_name' => $user->building_name,
@@ -145,16 +148,11 @@ class ItemController extends Controller
         return view('purchase.address', compact('item','user', 'purchaseAddress'));
     }
 
-    public function updateAddress(Request $request, $item_id)
+    public function updateAddress(AddressRequest $request, $item_id)
     {
-        $request->validate([
-            'postal_code' => ['required'],
-            'address' => ['required'],
-            'building_name' => ['nullable'],
-    ]);
-
+        $sessionKey = 'purchase_address_' . $item_id;
         session([
-            'purchase_address' => [
+            $sessionKey => [
                 'postal_code' => $request->postal_code,
                 'address' => $request->address,
                 'building_name' => $request->building_name,
@@ -164,7 +162,7 @@ class ItemController extends Controller
         return redirect("/purchase/{$item_id}");
     }
 
-    public function purchase(Request $request, $item_id)
+    public function purchase(PurchaseRequest $request, $item_id)
     {
         $item = Item::findOrFail($item_id);
         $user = auth()->user();
@@ -183,6 +181,7 @@ class ItemController extends Controller
         $item->save();
 
         Buy::create($buy);
+        session()->forget('purchase_address_' . $item_id);
         return redirect("/");
     }
 

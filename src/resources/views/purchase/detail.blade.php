@@ -83,12 +83,20 @@
                     </div>
                 </div>
 
-                <form action="/purchase/{{ $item->id }}" method="post" enctype="multipart/form-data" novalidate>
+                <form
+                    action="/purchase/{{ $item->id }}"
+                    method="post"
+                    enctype="multipart/form-data"
+                    novalidate
+                >
                     @csrf
-                    @if (!$item->sold)
-                    <div class="button-section">
-                        <button type="submit" class="submit-button">購入手続きへ</button>
-                    </div>
+                    @if (
+                        !$item->sold &&
+                        ($item->user_id !== auth()->id())
+                    )
+                        <div class="button-section">
+                            <button type="submit" class="submit-button">購入手続きへ</button>
+                        </div>
                     @endif
                 </form>
 
@@ -104,9 +112,11 @@
                             カテゴリー
                         </h3>
                         <div class="item__classification-content">
-                            <span class="item__classification-content--grey">
-                                {{ $item->category->content }}
-                            </span>
+                            @foreach ($item->categories as $category)
+                                <span class="item__classification-content--grey">
+                                    {{ $category->content }}
+                                </span>
+                            @endforeach
                         </div>
                     </div>
                     <div class="item__classification">

@@ -30,6 +30,11 @@
                     <label class="user-icon__label" for="icon" >画像を選択する</label>
                     <input type="file" class="user-icon__input" id="icon" name="icon" />
                 </div>
+                <span class="user-form__error">
+                        @error('icon')
+                            <span>{{ $message }}</span>
+                        @enderror
+                </span>
                 <div class="user-form__item">
                     <label class="user-form__label">ユーザー名</label>
                     <input class="user-form__input" type="text" name="name"

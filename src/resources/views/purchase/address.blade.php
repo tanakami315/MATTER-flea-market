@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/user.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/user.css') }}">
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@
                         class="user-form__input"
                         type="text"
                         name="postal_code"
-                        value="{{ old('postal_code', auth()->user()->postal_code) }}"
+                        value="{{  $purchaseAddress['postal_code'] }}"
                     />
                     <span class="user-form__error">
                         @error('postal_code')
@@ -38,7 +38,7 @@
                         class="user-form__input"
                         type="text"
                         name="address"
-                        value="{{ old('address',  auth()->user()->address) }}"
+                        value="{{  $purchaseAddress['address'] }}"
                     />
                     <span class="user-form__error">
                         @error('address')
@@ -53,7 +53,7 @@
                         class="user-form__input"
                         type="text"
                         name="building_name"
-                        value="{{ old('building_name', auth()->user()->building_name) }}"
+                        value="{{  $purchaseAddress['building_name'] }}"
                     />
                     <span class="user-form__error">
                         @error('building_name')

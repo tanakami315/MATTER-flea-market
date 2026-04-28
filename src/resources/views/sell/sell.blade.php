@@ -36,7 +36,7 @@
                                 <input
                                     class="category__input"
                                     type="checkbox"
-                                    name="category_id"
+                                    name="category_id[]"
                                     value="{{ $category->id }}"
                                     {{ old('category_id') == $category->id ? 'checked' : '' }}
                                 />
@@ -102,7 +102,9 @@
                 </div>
             </div>
             <div class="sell-form__button">
-                <button class="sell-form__button--submit" type="submit" class="btn btn-primary">出品する</button>
+                <button class="sell-form__button--submit" type="submit">
+                    出品する
+                </button>
             </div>
         </form>
     </div>
