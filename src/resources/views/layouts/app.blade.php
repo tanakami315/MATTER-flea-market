@@ -12,9 +12,6 @@ use Illuminate\Support\Str;
     <title>COACHTECH FMA</title>
     <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}">
     <link rel="stylesheet" href="{{ asset('css/common.css') }}">
-    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet"> -->
     @yield('css')
 </head>
 
@@ -25,10 +22,14 @@ use Illuminate\Support\Str;
                 <img src="{{ asset('image/COACHTECH.png') }}" alt="COACHTECH">
             </a>
             <div class="header__search">
-                <form class="search-form"action="{{ url('/search') }}" method="get">
-                    @csrf
+                <form
+                    class="search-form"
+                    action="{{ url('/search') }}"
+                    method="get"
+                >
+                    <input type="hidden" name="tab" value="{{ request('tab') }}">
                     <input
-                        class="search-form__content"
+                        class="search-form__input"
                         type="text"
                         name="keyword"
                         placeholder="なにをお探しですか？"
@@ -37,18 +38,44 @@ use Illuminate\Support\Str;
                     <button class="search-form__button" type="submit">検索</button>
                 </form>
             </div>
-            <div class="header__action">
+            <nav class="header__nav">
                 @if (Auth::check())
-                    <form action="/logout" method="post" class="header__logout-form">
+                    <form action="/logout"
+                        method="post"
+                    >
                         @csrf
-                        <button class="header__logout-button">ログアウト</button>
+                        <button
+                            class="header__nav-link
+                                header__nav-link--logout"
+                            type="submit"
+                        >
+                            ログアウト
+                        </button>
                     </form>
                 @else
-                    <a href="/login" class="header__login-link">ログイン</a>
+                    <a
+                        href="/login"
+                        class="header__nav-link
+                            header__nav-link--common"
+                    >
+                        ログイン
+                    </a>
                 @endif
-                    <a href="/mypage" class="header__mypage-link">マイページ</a>
-                    <a href="/sell" class="header__sell-link">出品</a>
-            </div>
+                    <a
+                        href="/mypage"
+                        class="header__nav-link
+                            header__nav-link--common"
+                    >
+                        マイページ
+                    </a>
+                    <a
+                        href="/sell"
+                        class="header__nav-link
+                            header__nav-link--sell"
+                    >
+                        出品
+                    </a>
+            </nav>
         </div>
     </header>
 

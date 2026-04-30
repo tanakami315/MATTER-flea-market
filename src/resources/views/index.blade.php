@@ -6,22 +6,22 @@
 @endsection
 
 @section('content')
-<div class="label">
-    <div class="label__page">
+<nav class="label">
+    <div class="label__inner">
         <a
             href="{{ url('/?keyword=' . request('keyword')) }}"
-            class="label__page--link {{ request('tab')!='mylist'? 'active' : '' }}"
+            class="label__link {{ request('tab')!='mylist'? 'label__link--active' : '' }}"
         >
             おすすめ
         </a>
         <a
             href="{{ url('/?tab=mylist&keyword=' . request('keyword')) }}"
-            class="label__page--link {{ request('tab')=='mylist'? 'active' : '' }}"
+            class="label__link {{ request('tab')=='mylist'? 'label__link--active' : '' }}"
         >
             マイリスト
         </a>
     </div>
-</div>
+</nav>
 
 <!-- 以下mypage.blade.phpとおなじ -->
 <div class="list">
@@ -30,13 +30,13 @@
             <div class="item__image">
                 <a href="{{ url('/item/' . $item->id) }}">
                 @if (Str::startsWith($item->image, ['http://', 'https://']))
-                    <img class="item__image--view" src="{{ $item->image }}" alt="商品画像">
+                    <img class="item__image-img" src="{{ $item->image }}" alt="商品画像">
                 @else
-                    <img class="item__image--view" src="{{ asset('storage/' . $item->image) }}" alt="商品画像">
+                    <img class="item__image-img" src="{{ asset('storage/' . $item->image) }}" alt="商品画像">
                 @endif
                 </a>
                 @if ($item->sold)
-                    <span class="item__image--text">SOLD</span>
+                    <span class="item__sold-label">SOLD</span>
                 @endif
             </div>
             <div class="item__name">

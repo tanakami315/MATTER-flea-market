@@ -18,52 +18,67 @@
             @csrf
             <div class="user-form__group">
                 <div class="user-form__item">
-                    <label class="user-form__label">郵便番号</label>
+                    <label
+                        class="user-form__label"
+                        for="postal_code"
+                    >
+                        郵便番号
+                    </label>
                     <input
                         class="user-form__input"
                         type="text"
                         name="postal_code"
                         value="{{  $purchaseAddress['postal_code'] }}"
                     />
-                    <span class="user-form__error">
+                    <span class="input-form__error">
                         @error('postal_code')
-                            <span>{{ $message }}</span>
+                            {{ $message }}
                         @enderror
                     </span>
                 </div>
                     
                 <div class="user-form__item">
-                    <label class="user-form__label">住所</label>
+                    <label
+                        class="user-form__label"
+                        for="address"
+                    >
+                        住所
+                    </label>
                     <input
                         class="user-form__input"
                         type="text"
                         name="address"
                         value="{{  $purchaseAddress['address'] }}"
                     />
-                    <span class="user-form__error">
+                    <span class="input-form__error">
                         @error('address')
-                            <span>{{ $message }}</span>
+                            {{ $message }}
                         @enderror
                     </span>
                 </div>
 
                 <div class="user-form__item">
-                    <label class="user-form__label">建物名</label>
+                    <label
+                        class="user-form__label"
+                        for="building_name"
+                    >
+                        建物名
+                    </label>
                     <input
                         class="user-form__input"
                         type="text"
                         name="building_name"
                         value="{{  $purchaseAddress['building_name'] }}"
                     />
-                    <span class="user-form__error">
+                    <span class="input-form__error">
                         @error('building_name')
-                            <span>{{ $message }}</span>
+                            {{ $message }}
                         @enderror
                     </span>
                 </div>
             </div>
-            <div class="user-form__button">
-                <button class="user-form__button--submit" type="submit">更新する</button>
+            <div class="button-wrapper">
+                <button class="submit-button" type="submit">更新する</button>
             </div>
         </form>
     </div>

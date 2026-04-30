@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/user.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/user.css') }}">
 @endsection
 
 @section('content')
@@ -12,56 +12,96 @@
         @csrf
         <div class="user-form__group">
             <div class="user-form__item">
-                <label class="user-form__label">ユーザー名</label>
-                <input class="user-form__input" type="text" name="name" value="{{ old('name') }}" />
-                <span class="user-form__error">
+                <label
+                    class="user-form__label"
+                    for="name"
+                >
+                    ユーザー名
+                </label>
+                <input
+                    class="user-form__input"
+                    type="text"
+                    name="name"
+                    value="{{ old('name') }}"
+                />
+                <span class="input-form__error">
                     @error('name')
-                    <span>{{ $message }}</span>
+                        {{ $message }}
                     @enderror
                 </span>
             </div>
 
             <div class="user-form__item">
-                <label class="user-form__label">メールアドレス</label>
-                <input class="user-form__input" type="email" name="email" value="{{ old('email') }}" />
-                <span class="user-form__error">
+                <label
+                    class="user-form__label"
+                    for="email"
+                >
+                    メールアドレス
+                </label>
+                <input
+                    class="user-form__input"
+                    type="email"
+                    name="email"
+                    value="{{ old('email') }}"
+                />
+                <span class="input-form__error">
                     @error('email')
-                    <span>{{ $message }}</span>
+                        {{ $message }}
                     @enderror
                 </span>
             </div>
 
             <div class="user-form__item">
-                <label class="user-form__label">パスワード</label>
-                <input class="user-form__input" type="password" name="password" value="{{ old('password') }}" />
-                <span class="user-form__error">
+                <label
+                    class="user-form__label"
+                    for="password"
+                >
+                    パスワード
+                </label>
+                <input
+                    class="user-form__input"
+                    type="password"
+                    name="password"
+                    value="{{ old('password') }}"
+                />
+                <span class="input-form__error">
                     @error('password')
                         @if ($message !== 'パスワードと一致しません。')
-                            <span>{{ $message }}</span>
+                            {{ $message }}
                         @endif
                     @enderror
                 </span>
             </div>
 
             <div class="user-form__item">
-                <label class="user-form__label">確認用パスワード</label>
-                <input class="user-form__input" type="password" name="password_confirmation" value="{{ old('password_confirmation') }}" />
-                <span class="user-form__error">
+                <label
+                    class="user-form__label"
+                    for="password_confirmation"
+                >
+                    確認用パスワード
+                </label>
+                <input
+                    class="user-form__input"
+                    type="password"
+                    name="password_confirmation"
+                    value="{{ old('password_confirmation') }}"
+                />
+                <span class="input-form__error">
                     @error('password')
                         @if ($message === 'パスワードと一致しません。')
-                            <span>{{ $message }}</span>
+                            {{ $message }}
                         @endif
                     @enderror
                 </span>
             </div>
         </div>
 
-        <div class="user-form__button">
-            <button class="user-form__button--submit" type="submit">登録</button>
+        <div class="button-wrapper">
+            <button class="submit-button" type="submit">登録</button>
         </div>
     </form>
-    <div class="auth__link">
-		<a class="auth__link--submit" href="/login">ログインはこちら</a>
+    <div class="auth-link">
+		<a class="auth-link__item" href="/login">ログインはこちら</a>
 	</div>
 </div>
 @endsection

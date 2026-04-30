@@ -18,19 +18,37 @@
             <div class="sell-form__group">
                 <div class="sell-form__item">
                     <label class="sell-form__label" for="image">商品画像</label>
-                    <div class="sell-form__input--image">
-                        <label class="image-box">
-                            <input type="file" class="image-box__input" id="image" name="image" required>
-                            <span class="image-box__text" for="image" name="image" >
+                    <div class="sell-form__image-input">
+                        <label
+                            class="sell-form__image-box"
+                            for="image"
+                        >
+                            <input
+                                type="file"
+                                class="image-box__input"
+                                id="image"
+                                name="image"
+                                value="{{ old('image') }}"
+                            >
+                            <span
+                                class="image-box__text"
+                                for="image"
+                                name="image"
+                            >
                                 画像を選択する
                             </span>
                         </label>
+                    </div>
+                    <div class="input-form__error">
+                        @error('image')
+                            {{ $message }}
+                        @enderror
                     </div>
                 </div>
                 <h2 class="sell-form__subtitle">商品の詳細</h2>
                 <div class="sell-form__item">
                     <label class="sell-form__label" for="category">カテゴリー</label>
-                    <div class="sell-form__input--category" name="category_id">
+                    <div class="sell-form__category-input" name="category_id">
                         @foreach($categories as $category)
                             <label class="category__item">
                                 <input
@@ -38,7 +56,7 @@
                                     type="checkbox"
                                     name="category_id[]"
                                     value="{{ $category->id }}"
-                                    {{ old('category_id') == $category->id ? 'checked' : '' }}
+                                    {{ in_array($category->id, old('category_id', [])) ? 'checked' : '' }}
                                 />
                                 <span class="category__content">
                                     {{ $category->content }}
@@ -47,10 +65,19 @@
                         @endforeach
                         <span class="category__empty"></span>
                     </div>
+                    <div class="input-form__error">
+                        @error('category_id')
+                            {{ $message }}
+                        @enderror
+                    </div>
                 </div>
                 <div class="sell-form__item">
-                    <label class="sell-form__label" for="condition">コンディション</label>
-                    <select class="sell-form__input--common condition" name="condition" required>
+                    <label class="sell-form__label" for="condition">商品の状態</label>
+                    <select
+                        class="sell-form__input
+                            sell-form__input--condition"
+                        name="condition"
+                    >
                         <option
                             value=""
                             disabled
@@ -72,24 +99,90 @@
                             状態が悪い
                         </option>
                     </select>
+                    <div class="input-form__error">
+                        @error('condition')
+                            {{ $message }}
+                        @enderror
+                    </div>
                 </div>
                 <div class="sell-form__item">
-                    <label class="sell-form__label" for="name">商品名</label>
-                    <input type="text" class="sell-form__input--common others" id="name" name="name" required>
+                    <label
+                        class="sell-form__label"
+                        for="name"
+                    >
+                        商品名
+                    </label>
+                    <input
+                        type="text"
+                        class="sell-form__input
+                            sell-form__input--others"
+                            id="name"
+                            name="name"
+                            value="{{ old('name') }}"
+                    />
+                    <div class="input-form__error">
+                        @error('name')
+                            {{ $message }}
+                        @enderror
+                    </div>
                 </div>
                 <div class="sell-form__item">
-                    <label class="sell-form__label" for="brand">ブランド</label>
-                    <input type="text" class="sell-form__input--common  others" id="brand" name="brand" required>
+                    <label
+                        class="sell-form__label"
+                        for="brand"
+                    >
+                        ブランド
+                    </label>
+                    <input
+                        type="text"
+                        class="sell-form__input
+                            sell-form__input--others"
+                        id="brand"
+                        name="brand"
+                        value="{{ old('brand') }}"
+                    />
                 </div>
                 <div class="sell-form__item">
-                    <label class="sell-form__label" for="description">商品の説明</label>
-                    <textarea class="sell-form__input--common description" id="description" name="description" ></textarea>
+                    <label
+                        class="sell-form__label"
+                        for="description"
+                    >
+                        商品の説明
+                    </label>
+                    <textarea
+                        class="sell-form__input
+                            sell-form__input--description"
+                        id="description"
+                        name="description"
+                    >{{ old('description') }}</textarea>
+                    <div class="input-form__error">
+                        @error('description')
+                            {{ $message }}
+                        @enderror
+                    </div>
                 </div>
                 <div class="sell-form__item">
-                    <label class="sell-form__label" for="price">販売価格</label>
+                    <label
+                        class="sell-form__label"
+                        for="price"
+                    >
+                        販売価格
+                    </label>
                     <div class="sell-form__price">
                         <span class="sell-form__price-mark">￥</span>
-                        <input type="text" class="sell-form__input--common price" id="price" name="price" required>
+                        <input
+                            type="text"
+                            class="sell-form__input
+                                sell-form__input--price"
+                            id="price"
+                            name="price"
+                            value="{{ old('price') }}"
+                        >
+                    </div>
+                    <div class="input-form__error">
+                        @error('price')
+                            {{ $message }}
+                        @enderror
                     </div>
                 </div>
                 <div class="sell-form__item">
@@ -101,8 +194,8 @@
                     >
                 </div>
             </div>
-            <div class="sell-form__button">
-                <button class="sell-form__button--submit" type="submit">
+            <div class="button-wrapper">
+                <button class="submit-button" type="submit">
                     出品する
                 </button>
             </div>

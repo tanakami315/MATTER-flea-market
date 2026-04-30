@@ -10,35 +10,33 @@
 
 @section('content')
     <div class="item">
-    @csrf
-        <div class="item-group">
+        <div class="item__group">
             <div class="item__image">
                 @if (Str::startsWith($item->image, ['http://', 'https://']))
-                    <img class="item__image--view" src="{{ $item->image }}" alt="商品画像">
+                    <img class="item__image-img" src="{{ $item->image }}" alt="商品画像">
                 @else
-                    <img class="item__image--view" src="{{ asset('storage/' . $item->image) }}" alt="商品画像">
+                    <img class="item__image-img" src="{{ asset('storage/' . $item->image) }}" alt="商品画像">
                 @endif
-                </a>
                 @if ($item->sold)
-                    <span class="item__image--text">SOLD</span>
+                    <span class="item__sold-label">SOLD</span>
                 @endif
             </div>
         </div>
 
-        <div class="item-group">
+        <div class="item__group">
             <div class="item__content">
                 <h1 class="item__name">{{ $item->name }}</h1>
                 <p class="item__brand">{{ $item->brand }}</p>
                 <p class="item__price">
                     ￥
-                    <span class="item__price--large">
+                    <span class="item__price-emphasis">
                         {{ number_format($item->price) }}
                     </span>
                     (税込)
                 </p>
 
                 <div class="reaction">
-                    <div class="reaction-info">
+                    <div class="reaction__item">
                         @if($liked)
                             <form
                                 action="/item/{{ $item->id }}/like"
@@ -47,7 +45,7 @@
                                 @method('delete')
                                 @csrf
                                 <button
-                                    class="reaction-image"
+                                    class="reaction__button"
                                     type="submit"
                                 >
                                     <img
@@ -62,7 +60,10 @@
                                 method="post"
                             >
                                 @csrf
-                                <button type="submit" class="reaction-image">
+                                <button
+                                    class="reaction__button"
+                                    type="submit"
+                                >
                                     <img
                                         src="{{ asset('image/heart.png' ) }}"
                                         alt="いいね"
@@ -70,16 +71,26 @@
                                 </button>
                             </form>
                         @endif
-                        <span class="reaction-count--like">{{ $item->likes->count() }}</span>
+                        <span
+                            class="reaction__count
+                                reaction__count--like"
+                        >
+                            {{ $item->likes->count() }}
+                        </span>
                     </div>
-                    <div class="reaction-info">
-                        <div class="reaction-image">
+                    <div class="reaction__item">
+                        <div class="reaction__button">
                             <img
                                 src="{{ asset('image/comment.png' ) }}"
                                 alt="コメント"
                             >
                         </div>
-                        <span class="reaction-count--comment">{{ $item->comments->count() }}</span>
+                        <span
+                            class="reaction__count
+                                reaction__count--comment"
+                        >
+                            {{ $item->comments->count() }}
+                        </span>
                     </div>
                 </div>
 
@@ -94,8 +105,13 @@
                         !$item->sold &&
                         ($item->user_id !== auth()->id())
                     )
-                        <div class="button-section">
-                            <button type="submit" class="submit-button">購入手続きへ</button>
+                        <div class="button-wrapper">
+                            <button
+                                class="submit-button"
+                                type="submit"
+                            >
+                                購入手続きへ
+                            </button>
                         </div>
                     @endif
                 </form>
@@ -113,7 +129,7 @@
                         </h3>
                         <div class="item__classification-content">
                             @foreach ($item->categories as $category)
-                                <span class="item__classification-content--grey">
+                                <span class="item__classification-category">
                                     {{ $category->content }}
                                 </span>
                             @endforeach
@@ -132,8 +148,8 @@
                     </div>
                 </div>
                 <div class="item__detail">
-                    <h2 class="item__subtitle">
-                        <span class="change-color">コメント({{ $item->comments->count() }})</span>
+                    <h2 class="item__subtitle item__subtitle--grey">
+                        コメント({{ $item->comments->count() }})
                     </h2>
                         <form
                             action="/item/{{ $item->id }}/comment"
@@ -142,39 +158,45 @@
                             novalidate
                         >
                             @csrf
-                            <div class="item-comments">
-                            @foreach ($comments as $comment)
-                                <div class="comment__show">
-                                    <div class="comment-user">
-                                        @if ($comment->user->icon)
-                                            <img
-                                                class="user-icon__image"
-                                                src="{{ asset('storage/' . $comment->user->icon) }}"
-                                                alt="アイコン"
-                                            >
-                                        @else
-                                            <img
-                                                class="user-icon__default"
-                                                alt="デフォルト"
-                                            >
-                                        @endif
+                            <div class="item__comments">
+                                @foreach ($item->comments as $comment)
+                                    <div class="comment">
+                                        <div class="comment__user">
+                                            @if ($comment->user->icon)
+                                                <img
+                                                    class="user__icon-image"
+                                                    src="{{ asset('storage/' . $comment->user->icon) }}"
+                                                    alt=""
+                                                >
+                                            @else
+                                                <img
+                                                    class="user__icon-default"
+                                                    alt=""
+                                                >
+                                            @endif
 
-                                        <span class="comment-user__name">
-                                            {{ $comment->user->name }}
-                                        </span>
+                                            <span class="user__name">
+                                                {{ $comment->user->name }}
+                                            </span>
+                                        </div>
+                                        <p class="comment__text">
+                                            {{ $comment->comment }}
+                                        </p>
                                     </div>
-                                    <p class="comment-user__text">
-                                        {{ $comment->comment }}
-                                    </p>
-                                </div>
-                            @endforeach
+                                @endforeach
                                 @if (!$item->sold)
                                     <h4 class="comment__title">商品へのコメント</h4>
                                     <textarea class="comment__input" name="comment"></textarea>
-                                    <div class="button-section">
+                                    <span class="input-form__error">
+                                        @error('comment')
+                                            {{ $message }}
+                                        @enderror
+                                    </span>
+                                    <div class="button-wrapper">
                                         <button type="submit" class="submit-button">コメントを送信する</button>
                                     </div>
                                 @endif
+                            </div>
                         </form>
                 </div>
             </div>

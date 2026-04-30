@@ -43,7 +43,7 @@ class Item extends Model
     public function scopeKeywordSearch($query, $keyword)
     {
         if (auth()->check()) {
-        $query->where('user_id', '!=', auth()->id());
+        $query->where('items.user_id', '!=', auth()->id());
         }
 
         if (!empty($keyword)) {
@@ -57,7 +57,7 @@ class Item extends Model
     public function scopeExceptMine($query)
     {
         if (auth()->check()) {
-            $query->where('user_id', '!=', auth()->id());
+            $query->where('items.user_id', '!=', auth()->id());
         }
 
         return $query;

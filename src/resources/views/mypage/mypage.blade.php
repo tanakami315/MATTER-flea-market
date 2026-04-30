@@ -10,40 +10,39 @@
 
 @section('content')
     <div class="user">
-    @csrf
-        <div class="user-icon">
+        <div class="user__icon">
             @if(Auth::user()->icon)
                 <img
-                    class="user-icon__image"
+                    class="user__icon-image"
                     src="{{ asset('storage/' . Auth::user()->icon) }}"
                     alt=""
                 />
             @else
-                <div class="user-icon__default"></div>
+                <div class="user__icon-default"></div>
             @endif
         </div>
-        <div class="user-name">{{ Auth::user()->name }}</div>
-        <div class="profile">
-            <a class="profile-link" href="/mypage/profile">プロフィールを編集</a>
+        <div class="user__name">{{ Auth::user()->name }}</div>
+        <div class="user__profile">
+            <a class="user__profile-link" href="/mypage/profile">プロフィールを編集</a>
         </div>
     </div>
 
-    <div class="label">
-        <div class="label__page">
+    <nav class="label">
+        <div class="label__inner">
             <a
-                href="{{ url('/mypage') }}"
-                class="label__page--link {{ request('tab')!='buy'?' active' : '' }}"
+                href="{{ url('/mypage/?tab=sell') }}"
+                class="label__link {{ request('tab')=='sell'?' label__link--active' : '' }}"
             >
                 出品した商品
             </a>
             <a
                 href="{{ url('mypage/?tab=buy') }}"
-                class="label__page--link {{ request('tab')=='buy'? 'active' : '' }}"
+                class="label__link {{ request('tab')=='buy'? 'label__link--active' : '' }}"
             >
                 購入した商品
             </a>
         </div>
-    </div>
+    </nav>
 
     <!-- 以下index.blade.phpとおなじ -->
     <div class="list">
@@ -52,13 +51,13 @@
                 <div class="item__image">
                     <a href="{{ url('/item/' . $item->id) }}">
                     @if (Str::startsWith($item->image, ['http://', 'https://']))
-                        <img class="item__image--view" src="{{ $item->image }}" alt="商品画像">
+                        <img class="item__image-img" src="{{ $item->image }}" alt="商品画像">
                     @else
-                        <img class="item__image--view" src="{{ asset('storage/' . $item->image) }}" alt="商品画像">
+                        <img class="item__image-img" src="{{ asset('storage/' . $item->image) }}" alt="商品画像">
                     @endif
                     </a>
                     @if ($item->sold)
-                        <span class="item__image--text">SOLD</span>
+                        <span class="item__sold-label">SOLD</span>
                     @endif
                 </div>
                 <div class="item__name">

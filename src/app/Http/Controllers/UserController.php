@@ -20,6 +20,7 @@ class UserController extends Controller
         $user->postal_code = $request->postal_code;
         $user->address = $request->address;
         $user->building_name = $request->building_name;
+        $user->profile_completed = true;
 
         if ($request->hasFile('icon')) {
             $path = $request->file('icon')->store('user_icon', 'public');

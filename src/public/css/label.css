@@ -4,19 +4,19 @@
     border-bottom: 2px solid #5F5F5F;
 }
 
-.label__page {
+.label__inner {
     margin-left: 200px;
     display: flex;
     gap: 100px;
 }
 
-.label__page--link {
+.label__link {
     font-size: 24px;
     font-weight: 700;
     color: #5F5F5F;
     text-decoration: none;
 }
 
-.label__page--link.active {
+.label__link--active {
     color: #FF0000;
 }

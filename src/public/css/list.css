@@ -1,6 +1,6 @@
 .list {
-    margin: 100px auto 0;
     max-width: 1350px;
+    margin: 100px auto 0;
     display: flex;
     flex-wrap: wrap;
     gap: 50px;
@@ -17,13 +17,13 @@
     position: relative;
 }
 
-.item__image--view {
+.item__image-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.item__image--text {
+.item__sold-label {
     padding: 7px 10px;
     position: absolute;
     top: 0px;

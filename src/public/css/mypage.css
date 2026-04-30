@@ -5,23 +5,23 @@
     align-items: center;
 }
 
-.user-icon {
+.user__icon {
     display: flex;
     align-items: center;
 }
 
-.user-name {
+.user__name {
     margin-left: 100px;
     font-size: 36px;
     font-weight: bold;
 }
 
-.profile {
+.user__profile {
     margin-right: 100px;
     margin-left: auto;
 }
 
-.profile-link {
+.user__profile-link {
     padding: 10px 20px;
     border:2px solid #FF5555;
     border-radius: 10px;

@@ -6,9 +6,9 @@
 @endsection
 
 @section('content')
-    <div class="purchase-card">
+    <div class="purchase">
         <form
-            class="purchase-form-area"
+            class="purchase__area"
             action="/purchase/finish/{{ $item->id }}"
             method="post"
             enctype="multipart/form-data"
@@ -16,7 +16,7 @@
         >
             @csrf
             <div class="purchase-form">
-                <div class="item-info">
+                <div class="purchase-form__item">
                     @if (Str::startsWith($item->image, ['http://', 'https://']))
                         <img class="item-image" src="{{ $item->image }}" alt="">
                     @else
@@ -33,7 +33,7 @@
                         支払方法
                     </div>
                     <select
-                        class="purchase-form__payment_method"
+                        class="purchase-form__payment-method"
                         name="payment_method"
                         id="payment_method"
                     >
@@ -48,9 +48,9 @@
                         <option value="1">コンビニ払い</option>
                         <option value="2">カード支払い</option>
                     </select>
-                    <div class="purchase-form__error">
+                    <div class="input-form__error purchase-form__error">
                         @error('payment_method')
-                            <span>{{ $message }}</span>
+                            {{ $message }}
                         @enderror
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                         </div>
                         <a
                             href="{{ url('/purchase/address/' . $item->id) }}"
-                            class="edit-address-link"
+                            class="purchase-form__edit-link"
                         >
                             変更する
                         </a>
@@ -93,11 +93,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="purchase-form__button">
-                <button class="purchase-form__button--submit" type="submit">
-                    購入する
-                </button>
-            </div>
+                <div class="button-wrapper">
+                    <button class="submit-button" type="submit">
+                        購入する
+                    </button>
+                </div>
             </div>
         </form>
     </div>

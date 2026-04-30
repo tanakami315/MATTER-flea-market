@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddressRequest;
 use App\Http\Requests\PurchaseRequest;
+use App\Http\Requests\ExhibitionRequest;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\Buy;
@@ -21,20 +22,15 @@ class ItemController extends Controller
         if ($tab === 'mylist') {
             $items = Item::join('likes', 'items.id', '=', 'likes.item_id')
                 ->where('likes.user_id', auth()->id())
+                ->KeywordSearch($request->query('keyword'))
                 ->orderBy('likes.id', 'desc')
                 ->select('items.*')
                 ->get();
         }
         #検索結果
-        else if ($tab === 'result') {
-            $items = Item::ExceptMine()
-                ->KeywordSearch($request->query('keyword'))
-                ->orderBy('id', 'desc')
-                ->get();
-        }
-        #おすすめ
         else {
             $items = Item::ExceptMine()
+                ->KeywordSearch($request->query('keyword'))
                 ->orderBy('id', 'desc')
                 ->get();
         }
@@ -56,11 +52,14 @@ class ItemController extends Controller
                 ->get();
         }
         #出品した商品
-        else {
+        elseif ($tab === 'sell') {
             $items = Item::with('categories')
                 ->where('user_id', auth()->id())
                 ->orderBy('id', 'desc')
                 ->get();
+        }
+        else {
+            $items = collect();
         }
 
         return view('mypage.mypage', compact('items'));
@@ -69,11 +68,21 @@ class ItemController extends Controller
     #検索
     public function search(Request $request)
     {
+        $tab = $request->query('tab');
+
+        if ($tab === 'mylist') {
+        $items = Item::join('likes', 'items.id', '=', 'likes.item_id')
+            ->where('likes.user_id', auth()->id())
+            ->KeywordSearch($request->keyword)
+            ->orderBy('likes.id', 'desc')
+            ->select('items.*')
+            ->get();
+        } else {
         $items = Item::with('categories')
             ->KeywordSearch($request->keyword)
             ->orderBy('id', 'desc')
             ->get();
-
+        }
         return view('index', compact('items'));
     }
 
@@ -84,7 +93,7 @@ class ItemController extends Controller
         return view('sell.sell',compact('categories'));
     }
 
-    public function store(Request $request)
+    public function store(ExhibitionRequest $request)
     {
         $itemData = $request->only([ 
             'user_id',
@@ -114,10 +123,8 @@ class ItemController extends Controller
         $item = Item::with(['likes', 'categories', 'comments.user'])
             ->withCount('likes', 'comments')
             ->findOrFail($item_id);
-    
-        $category = Category::findOrFail($item->category_id);
-        
-        return view('purchase.detail', compact('item', 'categories'));
+
+        return view('purchase.detail', compact('item'));
     }
 
     public function choose(Request $request, $item_id)
@@ -125,7 +132,7 @@ class ItemController extends Controller
         $item = Item::findOrFail($item_id);
         $user = auth()->user();
         $sessionKey = 'purchase_address_' . $item_id;
-        $purchaseAddress = session('$sessionKey', [
+        $purchaseAddress = session($sessionKey, [
             'postal_code' => $user->postal_code,
             'address' => $user->address,
             'building_name' => $user->building_name,
@@ -139,7 +146,7 @@ class ItemController extends Controller
         $item = Item::findOrFail($item_id);
         $user = auth()->user();
         $sessionKey = 'purchase_address_' . $item_id;
-        $purchaseAddress = session('$sessionKey', [
+        $purchaseAddress = session($sessionKey, [
             'postal_code' => $user->postal_code,
             'address' => $user->address,
             'building_name' => $user->building_name,
@@ -166,7 +173,8 @@ class ItemController extends Controller
     {
         $item = Item::findOrFail($item_id);
         $user = auth()->user();
-        $purchaseAddress = session('purchase_address');
+        $sessionKey = 'purchase_address_' . $item_id;
+        $purchaseAddress = session($sessionKey);
 
         $buy = [
             'item_id' => $item->id,

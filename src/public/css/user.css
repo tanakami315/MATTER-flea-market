@@ -41,62 +41,41 @@
     font-size: 24px;
 }
 
-.user-form__error {
-    font-size: 20px;
-    color: #FF5555;
-}
-
-.user-form__button {
-    margin-top: 50px;
-}
-
-.user-form__button--submit {
-    width: 100%;
-    height: 50px;
-    padding: 0 12px;
-    border-radius: 5px;
-    border: none;
-    background-color: #FF5555;
-    color: #FFFF;
-    font-size: 26px;
-    font-weight: bold;
-}
-
-.auth__link {
+.auth-link {
     margin-top: 20px;
     text-align: center;
 }
 
-.auth__link--submit {
+.auth-link__item {
     font-size: 20px;
     color: #0073CC;
     text-decoration: none;
 }
 
-.user-form__item--icon {
+.user-form__icon {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
 /* アイコンの表示 */
-.user-icon__image, 
-.user-icon__default {
+.user__icon-image, 
+.user__icon-default {
     width: 150px;
     height: 150px;
     border-radius: 50%;
 }
-.user-icon__image {
+.user__icon-image {
 object-fit: cover;
 }
 
-.user-icon__default {
+.user__icon-default {
     border-radius: 50%;
     background-color: #D9D9D9;
 }
 
 /* 画像を編集 */
-.user-icon__label {
+.user__icon-label {
     margin-left: 50px;
     padding: 10px;
     border:2px solid #FF5555;
@@ -108,6 +87,6 @@ object-fit: cover;
 }
 
 /* 画像を挿入 */
-.user-icon__input {
+.user__icon-input {
     display: none;
 }

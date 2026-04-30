@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/user.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/user.css') }}">
 @endsection
 
 @section('content')
@@ -12,32 +12,52 @@
 		@csrf
 		<div class="user-form__group">
 			<div class="user-form__item">
-				<label class="user-form__label">メールアドレス</label>
-				<input class="user-form__input" type="email" name="email" value="{{ old('email') }}" />
-				<span class="user-form__error">
+				<label
+					class="user-form__label"
+					for="email"
+				>
+					メールアドレス
+				</label>
+				<input
+					class="user-form__input"
+					type="email"
+					name="email"
+					value="{{ old('email') }}"
+				/>
+				<span class="input-form__error">
 					@error('email')
-					<span>{{ $message }}</span>
+						{{ $message }}
 					@enderror
 				</span>
 			</div>
 
 			<div class="user-form__item">
-				<label class="user-form__label">パスワード</label>
-				<input class="user-form__input" type="password" name="password" value="{{ old('password') }}" />
-				<span class="user-form__error">
+				<label
+					class="user-form__label"
+					for="password"
+				>
+					パスワード
+				</label>
+				<input
+					class="user-form__input"
+					type="password"
+					name="password"
+					value="{{ old('password') }}"
+				/>
+				<span class="input-form__error">
 					@error('password')
-					<span>{{ $message }}</span>
+						{{ $message }}
 					@enderror
 				</span>
 			</div>
 		</div>
 
-		<div class="user-form__button">
-			<button class="user-form__button--submit" type="submit">ログインする</button>
+		<div class="button-wrapper">
+			<button class="submit-button" type="submit">ログインする</button>
 		</div>
 	</form>
-	<div class="auth__link">
-		<a class="auth__link--submit" href="/register">会員登録はこちら</a>
+	<div class="auth-link">
+		<a class="auth-link__item" href="/register">会員登録はこちら</a>
 	</div>
 </div>
 @endsection

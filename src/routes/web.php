@@ -19,11 +19,10 @@ use App\Http\Controllers\CommentController;
 Route::get('/', [ItemController::class, 'index']);
 Route::get('/item/{item_id}', [ItemController::class, 'showDetail']);
 Route::get('/search', [ItemController::class, 'search']);
-Route::get('/item/{item_id}', [CommentController::class, 'showComments']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/mypage/profile', [UserController::class, 'showProfile']);
-    Route::post('/mypage/update',[UserController::class,'updateProfile']);
+    Route::post('/mypage/profile',[UserController::class,'updateProfile']);
 
     Route::get('/mypage', [ItemController::class, 'showMypage']);
     Route::get('/sell', [ItemController::class, 'sell']);
