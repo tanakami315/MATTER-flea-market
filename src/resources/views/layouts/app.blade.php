@@ -21,61 +21,66 @@ use Illuminate\Support\Str;
             <a class="header__logo" href="/">
                 <img src="{{ asset('image/COACHTECH.png') }}" alt="COACHTECH">
             </a>
-            <div class="header__search">
-                <form
-                    class="search-form"
-                    action="{{ url('/search') }}"
-                    method="get"
-                >
-                    <input type="hidden" name="tab" value="{{ request('tab') }}">
-                    <input
-                        class="search-form__input"
-                        type="text"
-                        name="keyword"
-                        placeholder="なにをお探しですか？"
-                        value="{{request('keyword') }}"
-                    />
-                    <button class="search-form__button" type="submit">検索</button>
-                </form>
-            </div>
-            <nav class="header__nav">
-                @if (Auth::check())
-                    <form action="/logout"
-                        method="post"
+            @if(
+                !request()->is('login') &&
+                !request()->is('register') &&
+                !request()->is('email/verify')
+            )
+                <div class="header__search">
+                    <form
+                        class="search-form"
+                        action="{{ url('/search') }}"
+                        method="get"
                     >
-                        @csrf
-                        <button
-                            class="header__nav-link
-                                header__nav-link--logout"
-                            type="submit"
-                        >
-                            ログアウト
-                        </button>
+                        <input type="hidden" name="tab" value="{{ request('tab') }}">
+                        <input
+                            class="search-form__input"
+                            type="text"
+                            name="keyword"
+                            placeholder="なにをお探しですか？"
+                            value="{{request('keyword') }}"
+                        />
                     </form>
-                @else
-                    <a
-                        href="/login"
-                        class="header__nav-link
-                            header__nav-link--common"
-                    >
-                        ログイン
-                    </a>
-                @endif
-                    <a
-                        href="/mypage"
-                        class="header__nav-link
-                            header__nav-link--common"
-                    >
-                        マイページ
-                    </a>
-                    <a
-                        href="/sell"
-                        class="header__nav-link
-                            header__nav-link--sell"
-                    >
-                        出品
-                    </a>
-            </nav>
+                </div>
+                <nav class="header__nav">
+                    @if (Auth::check())
+                        <form action="/logout"
+                            method="post"
+                        >
+                            @csrf
+                            <button
+                                class="header__nav-link
+                                    header__nav-link--logout"
+                                type="submit"
+                            >
+                                ログアウト
+                            </button>
+                        </form>
+                    @else
+                        <a
+                            href="/login"
+                            class="header__nav-link
+                                header__nav-link--common"
+                        >
+                            ログイン
+                        </a>
+                    @endif
+                        <a
+                            href="/mypage"
+                            class="header__nav-link
+                                header__nav-link--common"
+                        >
+                            マイページ
+                        </a>
+                        <a
+                            href="/sell"
+                            class="header__nav-link
+                                header__nav-link--sell"
+                        >
+                            出品
+                        </a>
+                </nav>
+            @endif
         </div>
     </header>
 

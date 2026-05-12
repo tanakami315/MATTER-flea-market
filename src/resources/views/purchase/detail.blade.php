@@ -18,7 +18,7 @@
                     <img class="item__image-img" src="{{ asset('storage/' . $item->image) }}" alt="商品画像">
                 @endif
                 @if ($item->sold)
-                    <span class="item__sold-label">SOLD</span>
+                    <span class="item__sold-label">sold</span>
                 @endif
             </div>
         </div>
@@ -49,6 +49,7 @@
                                     type="submit"
                                 >
                                     <img
+                                        class="reaction__image"
                                         src="{{ asset('image/heart_pink.png' ) }}"
                                         alt="いいね解除"
                                         >
@@ -65,6 +66,7 @@
                                     type="submit"
                                 >
                                     <img
+                                        class="reaction__image"
                                         src="{{ asset('image/heart.png' ) }}"
                                         alt="いいね"
                                     >
@@ -72,8 +74,7 @@
                             </form>
                         @endif
                         <span
-                            class="reaction__count
-                                reaction__count--like"
+                            class="reaction__count"
                         >
                             {{ $item->likes->count() }}
                         </span>
@@ -81,13 +82,13 @@
                     <div class="reaction__item">
                         <div class="reaction__button">
                             <img
+                                class="reaction__image"
                                 src="{{ asset('image/comment.png' ) }}"
                                 alt="コメント"
                             >
                         </div>
                         <span
-                            class="reaction__count
-                                reaction__count--comment"
+                            class="reaction__count"
                         >
                             {{ $item->comments->count() }}
                         </span>

@@ -1,5 +1,5 @@
 .item {
-    width: 1380px;
+    width: 1200px;
     margin: 95px auto 0;
     display: flex;
 }
@@ -33,7 +33,6 @@
 
 .item__content {
     margin-left: 100px;
-    width: 570px;
 }
 
 .item__name {
@@ -62,24 +61,33 @@
 
 .reaction__item {
     margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .reaction__button {
+    padding: 0;
     border: none;
     background-color: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.reaction__image {
+    width: 40px;
+    height: 40px;
+    display: block;
+    object-fit: contain;
+    align-items: center;
+}
+
 
 .reaction__count {
+    margin: 0;
     font-size: 18px;
     font-weight: bold;
-}
-
-.reaction__count--like {
-    margin-left: 22px;
-}
-
-.reaction__count--comment {
-    margin-left: 15px;
 }
 
 .item__purchase {

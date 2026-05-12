@@ -60,16 +60,16 @@ class ExhibitionRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'=> '商品名を入力してください。',
-            'description.required'=> '商品の説明を入力してください。',
-            'description.max'=> '商品の説明は255文字以下で入力してください。',
-            'image.required'=> '商品画像を選択してください。',
-            'image.mimes' => '商品画像はjpegまたはpng形式でアップロードしてください。',
-            'category_id.required' => 'カテゴリーを選択してください。',
-            'condition.required' => '商品の状態を選択してください。',
-            'price.required' => '販売価格を入力してください。',
-            'price.integer' => '販売価格は半角数字で入力してください。',
-            'price.min' => '販売価格は0円以上で入力してください。',
+            'name.required'=> '商品名を入力してください',
+            'description.required'=> '商品の説明を入力してください',
+            'description.max'=> '商品の説明は255文字以下で入力してください',
+            'image.required'=> '商品画像を選択してください',
+            'image.mimes' => '商品画像はjpegまたはpng形式でアップロードしてください',
+            'category_id.required' => 'カテゴリーを選択してください',
+            'condition.required' => '商品の状態を選択してください',
+            'price.required' => '販売価格を入力してください',
+            'price.integer' => '販売価格は半角数字で入力してください',
+            'price.min' => '販売価格は0円以上で入力してください',
 
         ];
     }

@@ -45,8 +45,8 @@
                         >
                             選択してください
                         </option>
-                        <option value="1">コンビニ払い</option>
-                        <option value="2">カード支払い</option>
+                        <option value="konbini">コンビニ払い</option>
+                        <option value="card">カード支払い</option>
                     </select>
                     <div class="input-form__error purchase-form__error">
                         @error('payment_method')
@@ -72,6 +72,9 @@
                         <div>{{ $purchaseAddress['address'] }}</div>
                         <div>{{ $purchaseAddress['building_name'] }}</div>
                     </div>
+                    <input type="hidden" name="postal_code" value="{{ $purchaseAddress['postal_code'] }}">
+                    <input type="hidden" name="address" value="{{ $purchaseAddress['address'] }}">
+                    <input type="hidden" name="building_name" value="{{ $purchaseAddress['building_name'] }}">
                 </div>
             </div>
 
@@ -108,9 +111,9 @@
             const text = document.getElementById('payment_method-text');
 
             select.addEventListener('change', function () {
-                if (this.value === '1') {
+                if (this.value === 'konbini') {
                     text.textContent = 'コンビニ払い';
-                } else if (this.value === '2') {
+                } else if (this.value === 'card') {
                     text.textContent = 'カード支払い';
                 } else {
                     text.textContent = '選択してください';

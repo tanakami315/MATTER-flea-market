@@ -29,6 +29,6 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect('/mypage');
+        return redirect()->intended('/mypage');
     }
 }

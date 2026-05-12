@@ -10,6 +10,8 @@ use App\Models\Item;
 use App\Models\Category;
 use App\Models\Buy;
 use App\Models\Like;
+use Stripe\Stripe;
+use Stripe\Checkout\Session;
 
 class ItemController extends Controller
 {
@@ -114,7 +116,7 @@ class ItemController extends Controller
 
         $item = Item::create($itemData);
         $item->categories()->sync($request->category_id);
-        return redirect('/');
+        return redirect('/mypage');
     }
 
     #購入
@@ -172,25 +174,61 @@ class ItemController extends Controller
     public function purchase(PurchaseRequest $request, $item_id)
     {
         $item = Item::findOrFail($item_id);
+
+        session([
+            'purchase_data_' . $item_id => [
+                'postal_code' => $request->postal_code,
+                'address' => $request->address,
+                'building_name' => $request->building_name,
+                'payment_method' => $request->payment_method,
+            ]
+        ]);
+
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+        $session = Session::create([
+            'payment_method_types' => [$request->payment_method],
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'jpy',
+                    'product_data' => [
+                        'name' => $item->name,
+                    ],
+                    'unit_amount' => $item->price,
+                ],
+                'quantity' => 1,
+            ]],
+
+            'mode' => 'payment',
+            'success_url' => url('/purchase/success/' . $item->id),
+            'cancel_url' => url('/purchase/' . $item->id),
+        ]);
+
+        return redirect($session->url);
+    }
+
+    public function success(Request $request, $item_id)
+    {
+        $item = Item::findOrFail($item_id);
         $user = auth()->user();
-        $sessionKey = 'purchase_address_' . $item_id;
-        $purchaseAddress = session($sessionKey);
+        $purchaseData = session('purchase_data_' . $item_id);
 
         $buy = [
             'item_id' => $item->id,
             'user_id' => $user->id,
-            'postal_code' => $purchaseAddress['postal_code'] ?? $user->postal_code,
-            'address' => $purchaseAddress['address'] ?? $user->address,
-            'building_name' => $purchaseAddress['building_name'] ?? $user->building_name,
-            'payment_method' => $request->payment_method,
+            'postal_code' => $purchaseData['postal_code'] ?? $user->postal_code,
+            'address' => $purchaseData['address'] ?? $user->address,
+            'building_name' => $purchaseData['building_name'] ?? $user->building_name,
+            'payment_method' => $purchaseData['payment_method'],
         ];
 
         $item->sold = true;
         $item->save();
 
         Buy::create($buy);
+        session()->forget('purchase_data_' . $item_id);
         session()->forget('purchase_address_' . $item_id);
-        return redirect("/");
+        return redirect("/mypage");
     }
 
     #いいね

@@ -66,7 +66,7 @@
                 />
                 <span class="input-form__error">
                     @error('password')
-                        @if ($message !== 'パスワードと一致しません。')
+                        @if ($message !== 'パスワードと一致しません')
                             {{ $message }}
                         @endif
                     @enderror
@@ -88,7 +88,7 @@
                 />
                 <span class="input-form__error">
                     @error('password')
-                        @if ($message === 'パスワードと一致しません。')
+                        @if ($message === 'パスワードと一致しません')
                             {{ $message }}
                         @endif
                     @enderror

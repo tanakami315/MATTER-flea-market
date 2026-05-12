@@ -29,14 +29,14 @@
         <div class="item">
             <div class="item__image">
                 <a href="{{ url('/item/' . $item->id) }}">
-                @if (Str::startsWith($item->image, ['http://', 'https://']))
+                @if (Str::startsWith($item->image, ['https://']))
                     <img class="item__image-img" src="{{ $item->image }}" alt="商品画像">
                 @else
                     <img class="item__image-img" src="{{ asset('storage/' . $item->image) }}" alt="商品画像">
                 @endif
                 </a>
                 @if ($item->sold)
-                    <span class="item__sold-label">SOLD</span>
+                    <span class="item__sold-label">sold</span>
                 @endif
             </div>
             <div class="item__name">
