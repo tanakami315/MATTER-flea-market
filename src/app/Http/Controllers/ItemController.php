@@ -98,7 +98,6 @@ class ItemController extends Controller
     public function store(ExhibitionRequest $request)
     {
         $itemData = $request->only([ 
-            'user_id',
             'name',
             'condition',
             'brand',
@@ -108,7 +107,8 @@ class ItemController extends Controller
             'sold',
         ]);
 
-
+        $itemData['user_id'] = auth()->id();
+        
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('item-images', 'public');
             $itemData['image'] = $path;

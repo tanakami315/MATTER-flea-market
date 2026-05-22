@@ -3,16 +3,12 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
+    use RefreshDatabase;
+
     public function test_name_is_required()
     {
         $response = $this->post('/register', [
@@ -30,20 +26,21 @@ class RegisterTest extends TestCase
     public function test_email_is_required()
     {
         $response = $this->post('/register', [
-            'name' => '徳川家康',
+            'name' => 'テスト秀一',
             'email' => '',
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
 
         $response->assertSessionHasErrors([
+            'email' => 'メールアドレスを入力してください'
         ]);
     }
 
     public function test_password_is_required()
     {
         $response = $this->post('/register', [
-            'name' => '徳川家康',
+            'name' => 'テスト秀一',
             'email' => 'test@example.com',
             'password' => '',
             'password_confirmation' => 'password',
@@ -57,7 +54,7 @@ class RegisterTest extends TestCase
     public function test_password_must_be_at_least_8_characters()
     {
         $response = $this->post('/register', [
-            'name' => '徳川家康',
+            'name' => 'テスト秀一',
             'email' => 'test@example.com',
             'password' => 'pass',
             'password_confirmation' => 'pass',
@@ -71,7 +68,7 @@ class RegisterTest extends TestCase
     public function test_password_confirmation_must_match()
     {
         $response = $this->post('/register', [
-            'name' => '徳川家康',
+            'name' => 'テスト秀一',
             'email' => 'test@example.com',
             'password' => 'password',
             'password_confirmation' => 'password123',
@@ -85,13 +82,13 @@ class RegisterTest extends TestCase
     public function test_user_can_register()
     {
         $response = $this->post('/register', [
-            'name' => '徳川家康',
+            'name' => 'テスト秀一',
             'email' => 'test@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
 
-        $response->assertStatus(302);
+        $response->assertRedirect('/redirect-after-login');
 
         $this->assertDatabaseHas('users', [
             'email' => 'test@example.com',
