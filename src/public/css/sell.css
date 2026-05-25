@@ -45,6 +45,13 @@
     cursor: pointer;
 }
 
+.sell-form__image-preview {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    display: none;
+}
+
 .image-box__text {
     padding: 10px;
     border:2px solid #FF5555;

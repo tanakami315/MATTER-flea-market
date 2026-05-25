@@ -20,12 +20,19 @@
                 <div class="user-form__icon">
                     @if(Auth::user()->icon)
                         <img
+                            id="icon-preview"
                             class="user__icon-image"
                             src="{{ asset('storage/' . Auth::user()->icon) }}"
                             alt=""
                         />
                     @else
-                        <div class="user__icon-default"></div>
+                        <!-- <div class="user__icon-default"></div> -->
+                        <img
+                            id="icon-preview"
+                            class="user__icon-image  {{ Auth::user()->icon ? '' : 'user__icon-default' }}"
+                            src="{{ Auth::user()->icon ? asset('storage/' . Auth::user()->icon) : '' }}"
+                            alt=""
+                        />
                     @endif
                     <label
                         class="user__icon-label"
@@ -130,4 +137,22 @@
             </div>
         </form>
     </div>
+@endsection
+
+@section('js')
+<script>
+    const iconInput = document.getElementById('icon');
+    const iconPreview = document.getElementById('icon-preview');
+
+    iconInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+
+        if (!file) {
+            return;
+        }
+
+        iconPreview.src = URL.createObjectURL(file);
+        iconPreview.classList.remove('user__icon-default');
+    });
+</script>
 @endsection

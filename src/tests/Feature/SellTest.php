@@ -37,7 +37,7 @@ class SellTest extends TestCase
                 'price' => 5000,
                 'image' => $image,
             ]);
-
+        
         $response->assertStatus(302);
 
         $this->assertDatabaseHas('items', [
@@ -48,5 +48,9 @@ class SellTest extends TestCase
             'price' => 5000,
             'condition' => 1,
         ]);
+
+        $item = \App\Models\Item::first();
+
+        $this->assertNotEmpty($item->image);
     }
 }

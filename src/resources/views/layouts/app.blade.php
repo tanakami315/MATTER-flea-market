@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COACHTECH FMA</title>
+    <title>coachtechフリマ</title>
     <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}">
     <link rel="stylesheet" href="{{ asset('css/common.css') }}">
     @yield('css')
@@ -86,7 +86,9 @@ use Illuminate\Support\Str;
 
     <main>
         @yield('content')
+        @yield('js')
     </main>
+
 </body>
 
 </html>

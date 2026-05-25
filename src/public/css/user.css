@@ -66,11 +66,10 @@
     border-radius: 50%;
 }
 .user__icon-image {
-object-fit: cover;
+    object-fit: cover;
 }
 
 .user__icon-default {
-    border-radius: 50%;
     background-color: #D9D9D9;
 }
 

@@ -236,6 +236,9 @@ class ItemController extends Controller
     {
         $item = Item::findOrFail($item_id);
         $user = auth()->user();
+        if ($item->user_id === auth()->id()) {
+            return redirect()->back();
+        }
         Like::firstOrCreate(array_merge(['item_id' => $item_id, 'user_id' => $user->id]));
         return redirect("/item/{$item_id}");
     }

@@ -1,46 +1,46 @@
-# アプリケーション名
- Flea Market
+# coachtechフリマ
 
 ## 概要
 ユーザーが会員登録することで商品の出品、購入ができるフリマアプリです。
 
 ## 環境構築
-・Dockerビルド
-- git clone git@github.com:tanakami315/MATTER-flea-market.git
-- docker-compose up -d --build
+**Dockerビルド**
+1. `git clone git@github.com:tanakami315/MATTER-flea-market.git`
+2. DockerDesktopアプリを立ち上げる
+3. `docker-compose up -d --build`
 
-・Laravel環境構築
-- docker-compose exec php bash
-- composer install
-- cp .env.example .env,
-- .env ファイルの環境変数を変更
-    DB_CONNECTION=mysql
-    DB_HOST=mysql
-    DB_PORT=3306
-    DB_DATABASE=laravel_db
-    DB_USERNAME=laravel_user
-    DB_PASSWORD=laravel_pass
-- php artisan key:generate
-- php artisan migrate
-- php artisan db:seed
-- php artisan storage:link
+**Laravel環境構築**
+1. `docker-compose exec php bash`
+2. `composer install`
+3. 「.env.example」ファイルをコピーして 「.env」ファイルを作成。
+4. .envに以下の環境変数を追加
+``` text
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=laravel_db
+DB_USERNAME=laravel_user
+DB_PASSWORD=laravel_pass
+```
+5. アプリケーションキーの作成
+``` bash
+php artisan key:generate
+```
 
-## URL
-- 開発環境：http://localhost/
-- phpMyAdmin：http://localhost:8080/index.php
+6. マイグレーションの実行
+``` bash
+php artisan migrate
+```
 
-## 実行環境
+7. シーディングの実行
+``` bash
+php artisan db:seed
+```
+
+## 使用技術(実行環境)
 - PHP 8.5.3
-- Laravel Framework 8.83.8
-- MariaDB 11.8.6
-- nginx 1.21.1
-
-## 使用技術
-- Laravel Fortify
-- Livewire
-- Tailwind CSS
-- Blade
-- CSS
+- Laravel 8.83.8
+- MySQL 8.0.26
 
 ## ER図
-![ER図](ER.png)
+[ER図](flea-market.dio)

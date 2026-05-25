@@ -16,13 +16,21 @@ class DetailTest extends TestCase
 
     public function test_item_detail_is_displayed()
     {
-        $user = User::factory()->create();
+        $seller = User::factory()->create([
+            'name' => '出品トオル',
+        ]);
+
+        $commenter = User::factory()->create([
+            'name' => 'コメント美子',
+            'icon' => 'commenter_icon.jpg',
+        ]);
 
         $item = Item::factory()->create([
+            'user_id' => $seller->id,
             'name' => '白い帽子',
             'condition' => 1,
             'brand' => 'NEWARE',
-            'description' => '商品説明。',
+            'description' => '商品説明',
             'price' => 3000,
             'image' => 'whitecap.jpg',
             'sold' => false,
@@ -32,7 +40,7 @@ class DetailTest extends TestCase
             'content' => 'ファッション',
         ]);
 
-        $item->category()->attach($category->id);
+        $item->categories()->attach($category->id);
 
         Like::factory()->count(2)->create([
             'item_id' => $item->id,
@@ -43,7 +51,7 @@ class DetailTest extends TestCase
         ]);
 
         Comment::factory()->create([
-            'user_id' => $user->id,
+            'user_id' => $commenter->id,
             'item_id' => $item->id,
             'comment' => 'テストコメント',
         ]);
@@ -53,15 +61,18 @@ class DetailTest extends TestCase
         $response->assertStatus(200);
 
         $response->assertSee('白い帽子');
-        $response->assertSee('テストブランド');
-        $response->assertSee('3000');
-        $response->assertSee('商品の説明');
+        $response->assertSee('NEWARE');
+        $response->assertSee('3,000');
+        $response->assertSee('商品説明');
         $response->assertSee('ファッション');
         $response->assertSee('良好');
+        $response->assertSee('whitecap.jpg');
+
 
         $response->assertSee('2');
-        $response->assertSee('4');
-
+        $response->assertSee('コメント(4)');
+        $response->assertSee('コメント美子');
+        $response->assertSee('commenter_icon.jpg');
         $response->assertSee('テストコメント');
     }
 
@@ -77,7 +88,7 @@ class DetailTest extends TestCase
             'content' => 'メンズ',
         ]);
 
-        $item->category()->attach([
+        $item->categories()->attach([
             $category1->id,
             $category2->id,
         ]);

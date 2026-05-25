@@ -1,3 +1,9 @@
+html,
+body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
 .header {
     height: 80px;
     background: #000;
@@ -6,6 +12,7 @@
 .header__inner {
     width: 100%;
     max-width: none;
+    min-width: 0;
     margin: 0 auto;
     padding: 20px 40px;
     display: flex;
@@ -21,7 +28,7 @@
 
 .header__search {
     flex: 1;
-    max-width: 620px;
+    max-width: 500px;
     min-width: 0;
     margin: 0 40px;
 }
@@ -33,6 +40,7 @@
 
 .search-form__input {
     height: 40px;
+    min-width: 0;
     padding-left: 5px;
     flex: 1;
     font-size: 24px;

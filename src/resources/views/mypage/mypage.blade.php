@@ -57,7 +57,7 @@
                     @endif
                     </a>
                     @if ($item->sold)
-                        <span class="item__sold-label">SOLD</span>
+                        <span class="item__sold-label">Sold</span>
                     @endif
                 </div>
                 <div class="item__name">

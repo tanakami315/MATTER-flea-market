@@ -81,4 +81,4 @@ class MylistTest extends TestCase
 
         $response->assertDontSee('いいねした商品');
     }
-    }
+}

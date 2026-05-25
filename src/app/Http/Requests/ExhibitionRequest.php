@@ -52,7 +52,7 @@ class ExhibitionRequest extends FormRequest
             'price' => [
                 'required',
                 'integer',
-                'min:0'
+                'min:120'
             ],
         ];
     }
@@ -69,7 +69,7 @@ class ExhibitionRequest extends FormRequest
             'condition.required' => '商品の状態を選択してください',
             'price.required' => '販売価格を入力してください',
             'price.integer' => '販売価格は半角数字で入力してください',
-            'price.min' => '販売価格は0円以上で入力してください',
+            'price.min' => '販売価格は120円以上で入力してください',
 
         ];
     }

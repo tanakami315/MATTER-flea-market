@@ -23,6 +23,12 @@
                             class="sell-form__image-box"
                             for="image"
                         >
+                            <img
+                                id="image-preview"
+                                class="sell-form__image-preview"
+                                src=""
+                                alt=""
+                            >
                             <input
                                 type="file"
                                 class="image-box__input"
@@ -31,6 +37,7 @@
                                 value="{{ old('image') }}"
                             >
                             <span
+                                id="image-text"
                                 class="image-box__text"
                                 for="image"
                                 name="image"
@@ -105,6 +112,7 @@
                         @enderror
                     </div>
                 </div>
+                <h2 class="sell-form__subtitle">商品名と説明</h2>
                 <div class="sell-form__item">
                     <label
                         class="sell-form__label"
@@ -131,7 +139,7 @@
                         class="sell-form__label"
                         for="brand"
                     >
-                        ブランド
+                        ブランド名
                     </label>
                     <input
                         type="text"
@@ -201,4 +209,25 @@
             </div>
         </form>
     </div>
+@endsection
+
+@section('js')
+<script>
+    const imageInput = document.getElementById('image');
+    const imagePreview = document.getElementById('image-preview');
+    const imageText = document.getElementById('image-text');
+
+    imageInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+
+        if (!file) {
+            return;
+        }
+
+        imagePreview.src = URL.createObjectURL(file);
+
+        imagePreview.style.display = 'block';
+        imageText.style.display = 'none';
+    });
+</script>
 @endsection

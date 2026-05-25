@@ -11,7 +11,7 @@ class PurchaseMethodTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_payment_method_is_displayed()
+    public function test_selected_payment_method_is_displayed()
     {
         $user = User::factory()->create([
             'profile_completed' => true,
