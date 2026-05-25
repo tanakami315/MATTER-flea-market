@@ -37,6 +37,17 @@ php artisan migrate
 php artisan db:seed
 ```
 
+8. rootユーザ（管理者）でログイン
+``` bash
+mysql -u root -p
+```
+
+9. テスト用データベースの作成
+``` bash
+CREATE DATABASE test_1;
+```
+
+
 ## 使用技術(実行環境)
 - PHP 8.5.3
 - Laravel 8.83.8
