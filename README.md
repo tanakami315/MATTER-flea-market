@@ -43,4 +43,4 @@ php artisan db:seed
 - MySQL 8.0.26
 
 ## ER図
-[ER図](flea-market.dio)
+![alt](ER.png)
