@@ -23,7 +23,7 @@ class UserFactory extends Factory
             'building_name' => $this->faker->secondaryAddress(),
             'password' => bcrypt('password'), // password
             'remember_token' => Str::random(10),
-            'profile_complete' => 1,
+            'profile_completed' => 1,
         ];
     }
 
