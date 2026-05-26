@@ -26,8 +26,9 @@ MAIL_FROM_ADDRESS=test@example.com
 
 STRIPE_KEY=your_stripe_key
 STRIPE_SECRET=your_stripe_secret
-※Stripeのテスト用APIキーを設定してください。
 ```
+※Stripeのテスト用APIキーを設定してください。
+
 5. アプリケーションキーの作成
 ``` bash
 php artisan key:generate
@@ -55,19 +56,19 @@ php artisan storage:link
 
 ## 単体テスト
 1. rootユーザ（管理者）でログイン
-``` bash
+```MySQLコンテナ上
 mysql -u root -p
 ```
 
 2. テスト用データベースの作成
-``` bash
+``` MySQLログイン後
 CREATE DATABASE test_1;
 ```
 3. 「.env」ファイルをコピーして 「.env.testing」ファイルを作成。
 
 4. .env.testingで以下の環境変数を変更
 
-```env
+```env.testing
 APP_ENV=testing
 APP_KEY=
 
