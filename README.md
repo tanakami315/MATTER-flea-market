@@ -26,6 +26,7 @@ MAIL_FROM_ADDRESS=test@example.com
 
 STRIPE_KEY=your_stripe_key
 STRIPE_SECRET=your_stripe_secret
+※Stripeのテスト用APIキーを設定してください。
 ```
 5. アプリケーションキーの作成
 ``` bash
