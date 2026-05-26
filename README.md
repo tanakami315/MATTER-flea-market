@@ -13,7 +13,7 @@
 1. `docker-compose exec php bash`
 2. `composer install`
 3. 「.env.example」ファイルをコピーして 「.env」ファイルを作成。
-4. .envに以下の環境変数を追加
+4. .envで以下の環境変数を変更
 ``` textit 
 DB_CONNECTION=mysql
 DB_HOST=mysql
@@ -65,7 +65,7 @@ CREATE DATABASE test_1;
 ```
 3. 「.env」ファイルをコピーして 「.env.testing」ファイルを作成。
 
-4. .env.testingの環境変数を以下に変更
+4. .env.testingで以下の環境変数を変更
 
 ```env
 APP_ENV=testing
