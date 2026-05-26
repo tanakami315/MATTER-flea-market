@@ -120,7 +120,11 @@ vendor/bin/phpunit tests/Feature/VerifyEmailTest.php
 - MySQL 8.0.26
 
 ## ER図
+<<<<<<< HEAD
 [alt text](ER.png)
+=======
+![alt text](ER.png)
+>>>>>>> 9219465 (20260526_1446_README.User)
 
 ## URL
 - 開発環境：http://localhost
