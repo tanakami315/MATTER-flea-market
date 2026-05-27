@@ -116,7 +116,7 @@ class ItemController extends Controller
 
         $item = Item::create($itemData);
         $item->categories()->sync($request->category_id);
-        return redirect('/mypage');
+        return redirect('/mypage?tab=sell');
     }
 
     #購入
@@ -228,7 +228,7 @@ class ItemController extends Controller
         Buy::create($buy);
         session()->forget('purchase_data_' . $item_id);
         session()->forget('purchase_address_' . $item_id);
-        return redirect("/mypage");
+        return redirect("/");
     }
 
     #いいね
